@@ -81,11 +81,11 @@ const Trending = () => {
           <h1>Trending AI Tools</h1>
         </div>
         <div className=" grid grid-cols-2  justify-center   gap-2">
-          {TrendingTools.map((tools) => (
+          {TrendingTools.map((tools, key) => (
             <>
               <Card
                 className="flex flex-row justify-between py-2 items-center  pl-5 pr-2 "
-                id={tools.id}
+                id={key}
               >
                 <div className="flex flex-row justify-between space-x-4">
                   <p>{tools.date}</p>

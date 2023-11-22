@@ -3,8 +3,10 @@ import React from "react";
 import { Card } from "../ui/card";
 import Image from "next/image";
 import { Button } from "../ui/button";
+import { useRouter } from "next/router";
 
-const Explore = () => {
+const Explore = ({ post }) => {
+  const router = useRouter();
   return (
     <>
       <section className="flex flex-col mt-12 mx-60 ">
@@ -53,29 +55,32 @@ const Explore = () => {
         </div>
         <div className="grid grid-row-1 gap-8">
           {" "}
-          {ExploreTools.map((tools) => (
+          {post.map((tools) => (
             <>
               <Card
-                className="flex flex-row  py-4 pl-5 w-[1140px] space-x-4 "
+                className="flex flex-row  py-4 pl-5 w-[1140px] space-x-4 cursor-pointer"
                 id={tools.id}
+                onClick={() => router.push(`/tool/${tools.id}`)}
               >
                 <Image
-                  src={tools.image}
-                  width={100}
-                  height={100}
+                  src={tools.imageUrl}
+                  width={50}
+                  height={50}
                   className="w-64 h-48"
+                  loader={() => tools.imageUrl}
                   alt={tools.name}
                 />
                 <div className="flex flex-col justify-between">
                   <div className="flex flex-row items-center  justify-between">
                     <div className="flex flex-row space-x-2 items-center">
-                      <p className="text-lg font-medium">{tools.name}</p>
+                      <p className="text-lg font-medium">{tools.title}</p>
                       <Image
                         src="/redirect.svg"
                         width={15}
                         height={15}
                         className="inline"
                         alt="redirect"
+                        onClick={() => window.open(tools.source)}
                       />
                       <svg
                         width="16"
@@ -102,18 +107,18 @@ const Explore = () => {
                   </div>
                   <div>
                     <p className="text-xs text-secondary-foreground mr-20 ">
-                      {tools.description}
+                      {tools.content}
                     </p>
                   </div>
                   <div className="flex flex-row flex-wrap justify-between items-center ">
-                    <div className="flex flex-wrap flex-row space-x-3.5 items-center">
+                    {/* <div className="flex flex-wrap flex-row space-x-3.5 items-center">
                       {tools.tags.map((tag) => (
                         <p className="bg-[#2a2b37] text-xs p-2" key={tag.id}>
                           {" "}
                           {tag}
                         </p>
                       ))}
-                    </div>
+                    </div>{" "} */}
                   </div>
                 </div>
               </Card>

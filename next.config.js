@@ -5,13 +5,12 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "lh3.googleusercontent.com",
+        hostname: "**.ipfs.w3s.link",
+
         pathname: "**",
       },
     ],
     dangerouslyAllowSVG: true,
-
-    // domains: ["lh3.googleusercontent.com"],
   },
 };
 

@@ -5,8 +5,9 @@ import Offer from "@/components/landingpage/Offer";
 import Trending from "@/components/landingpage/Trending";
 import Explore from "@/components/landingpage/Explore";
 import Footer from "@/components/landingpage/Footer";
+import { prisma } from "@/lib/prisma";
 
-export default function Home() {
+export default function Home({ post }) {
   return (
     <main className={`flex min-h-screen flex-col    `}>
       <NavBar />
@@ -18,9 +19,44 @@ export default function Home() {
       </p>
       <Offer />
       <Trending />
-      <Explore />
+      <Explore post={post} />
       <Footer />
       {/* <LoginButton /> */}
     </main>
   );
+}
+
+export async function getServerSideProps() {
+  const getPosts = async () => {
+    try {
+      const postsWithTags = await prisma.post.findMany({
+        include: {
+          tags: {
+            include: {
+              tag: true,
+            },
+          },
+        },
+      });
+      const simplifiedPostsWithTags = postsWithTags.map((post) => ({
+        ...post,
+        tags: post.tags.map((itemsTag) => itemsTag.tag),
+      }));
+      const dataArray = [].concat(...Object.values(simplifiedPostsWithTags));
+      return dataArray;
+    } catch (error) {
+      console.error(error);
+      return []; // Return an empty array in case of an error
+    }
+  };
+
+  const post = await getPosts();
+
+  console.log(post, "jobs from the job calling function");
+
+  return {
+    props: {
+      post: JSON.parse(JSON.stringify(post)),
+    },
+  };
 }
