@@ -38,11 +38,8 @@ export async function getServerSideProps() {
           },
         },
       });
-      const simplifiedPostsWithTags = postsWithTags.map((post) => ({
-        ...post,
-        tags: post.tags.map((itemsTag) => itemsTag.tag),
-      }));
-      const dataArray = [].concat(...Object.values(simplifiedPostsWithTags));
+
+      const dataArray = [].concat(...Object.values(postsWithTags));
       return dataArray;
     } catch (error) {
       console.error(error);
