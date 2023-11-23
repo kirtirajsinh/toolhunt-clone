@@ -21,7 +21,6 @@ export default function Home({ post }) {
       <Trending />
       <Explore post={post} />
       <Footer />
-      {/* <LoginButton /> */}
     </main>
   );
 }

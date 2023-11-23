@@ -73,12 +73,10 @@ const LoginButton = () => {
       ) : (
         <button
           onClick={() => signIn("google")}
-          className="font-semibold flex items-center text-xl  cursor-pointer border rounded rounded-full hover:shadow-md  px-8 "
-          style={{
-            background: "var(--primary-button)",
-          }}
+          className="font-semibold flex gap-2 items-center border rounded-full hover:shadow-md px-8 py-2"
         >
-          <span>Login</span>
+          <span className="text-primary-button">Login</span>
+          <Image src="/icons/arrow.svg" width={16} height={16} alt="" />
         </button>
       )}
     </>
