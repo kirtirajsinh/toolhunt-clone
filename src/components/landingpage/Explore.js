@@ -28,7 +28,7 @@ const Explore = ({ post }) => {
           )}
         </div>
         <Button
-          className="self-center font-medium mt-8 mb-52 px-8 py-3 rounded-full font-sans text-base"
+          className="self-center font-medium mt-8 mb-24 px-8 py-3 rounded-full font-sans text-base"
           style={{
             background: "var(--primary-button)",
           }}

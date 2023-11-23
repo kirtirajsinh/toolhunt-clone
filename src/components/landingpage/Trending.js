@@ -6,7 +6,7 @@ import TrendingHeader from "./TrendingHeader";
 
 const Trending = () => {
   return (
-    <section className="flex flex-col mt-12 max-w-5xl mx-auto w-full px-8 lg:px-0">
+    <section className="flex flex-col mt-16 max-w-5xl mx-auto w-full px-8 lg:px-0 mb-24">
       <TrendingHeader />
       <div className="grid grid-cols-1 md:grid-cols-2 justify-center gap-x-6 gap-y-4">
         {TrendingTools.map((tools, key) => {
