@@ -7,7 +7,7 @@ import SocialDiv from "./landingpage/SocialDiv";
 const NavBar = () => {
   return (
     <div className="h-28 flex items-center w-full">
-      <div className="max-w-5xl mx-auto flex flex-row items-center justify-between w-full px-8">
+      <div className="max-w-5xl mx-auto flex flex-row items-center justify-between w-full px-8 lg:px-0">
         <div className="flex gap-8 items-center">
           <p className="font-bold text-2xl tracking-wider">Logo</p>
           <div className="flex gap-4">
