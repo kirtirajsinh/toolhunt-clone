@@ -73,7 +73,7 @@ const LoginButton = () => {
       ) : (
         <button
           onClick={() => signIn("google")}
-          className="font-semibold flex gap-2 items-center border rounded-full hover:shadow-md px-8 py-2"
+          className="font-semibold flex gap-2 items-center rounded-full hover:shadow-md px-8 py-2 bg-gradient-to-r from-[#0eca90] to-[#11c2b6]  bg-clip-text text-transparent border-[1px] border-[#0eca90] hover:bg-transparent hover:text-[#0eca90]"
         >
           <span className="text-primary-button">Login</span>
           <Image src="/icons/arrow.svg" width={16} height={16} alt="" />

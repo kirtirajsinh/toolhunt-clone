@@ -30,7 +30,7 @@ const Footer = () => {
           <p className="font-semibold text-sm">Follow US</p>
           <div className="flex gap-4 flex-wrap">
             <SocialDiv icon="/icons/linkedin.svg" text="34k" />
-            <SocialDiv icon="/icons/vector.svg" text="34k" />
+            <SocialDiv icon="/icons/plane.svg" text="34k" />
           </div>
         </div>
       </div>

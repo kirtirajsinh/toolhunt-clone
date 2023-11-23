@@ -10,7 +10,7 @@ const ExploreToolCard = ({
   rating,
   featured,
   content,
-  tags
+  tags,
 }) => {
   const router = useRouter();
 
@@ -34,7 +34,7 @@ const ExploreToolCard = ({
             <h4 className="font-semibold text-lg">{title}</h4>
             <span onClick={(e) => e.stopPropagation()}>
               <Image
-                src="/icons/share.svg"
+                src="/icons/redirect.svg"
                 className="cursor-pointer"
                 width={16}
                 height={16}
