@@ -1,32 +1,35 @@
 import Image from "next/image";
-import React from "react";
-import { Card } from "../ui/card";
 
 const Offer = () => {
   return (
-    <>
-      <Card className=" flex flex-row items-center px-9 w-[1140px] py-8 justify-between mt-4 mx-60 ">
+    <div className="px-12">
+      <div
+        className="flex flex-row items-center px-9 w-full max-w-5xl py-8 mt-8 mx-auto bg-cover rounded-xl overflow-hidden gap-8"
+        style={{ backgroundImage: "url(/offer-bg.png)" }}
+      >
         <Image
           src="/chatgpt.png"
           alt="ChatGPT"
-          width={80}
-          height={80}
-          className="w-40 "
+          width={140}
+          height={40}
+          className="w-40"
         />
-        <p className="">
-          ClipTutor transforms Youtubr Videos into personalised <br /> tutor for
-          efficient learnig and teaching it.
-        </p>
-        <button
-          className=" p-2 rounded-md "
-          style={{
-            background: "var(--primary-button)",
-          }}
-        >
-          Unlock Offer
-        </button>
-      </Card>
-    </>
+        <div className="flex flex-wrap gap-4 w-full justify-between">
+          <p className="font-medium text-base lg:text-xl md:w-[70%]">
+            ClipTutor transforms Youtubr Videos into personalised tutor
+            for efficient learnig and teaching it.
+          </p>
+          <button
+            className="py-2 px-4 rounded-md self-start"
+            style={{
+              background: "var(--primary-button)",
+            }}
+          >
+            Unlock Offer
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 
