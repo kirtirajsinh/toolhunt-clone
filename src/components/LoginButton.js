@@ -73,7 +73,10 @@ const LoginButton = () => {
       ) : (
         <button
           onClick={() => signIn("google")}
-          className="font-bold flex items-center gap-2 cursor-pointer border p-2 bg-primary-text rounded-md hover:shadow-md"
+          className="font-semibold flex items-center text-xl  cursor-pointer border rounded rounded-full hover:shadow-md  px-8 "
+          style={{
+            background: "var(--primary-button)",
+          }}
         >
           <span>Login</span>
         </button>

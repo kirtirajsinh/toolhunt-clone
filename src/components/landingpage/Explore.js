@@ -67,8 +67,7 @@ const Explore = ({ post }) => {
                   width={50}
                   height={50}
                   className="w-64 h-48"
-                  loader={() => tools.imageUrl}
-                  alt={tools.name}
+                  alt={tools?.name}
                 />
                 <div className="flex flex-col justify-between">
                   <div className="flex flex-row items-center  justify-between">

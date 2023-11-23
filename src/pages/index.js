@@ -29,15 +29,7 @@ export default function Home({ post }) {
 export async function getServerSideProps() {
   const getPosts = async () => {
     try {
-      const postsWithTags = await prisma.post.findMany({
-        include: {
-          tags: {
-            include: {
-              tag: true,
-            },
-          },
-        },
-      });
+      const postsWithTags = await prisma.post.findMany();
 
       const dataArray = [].concat(...Object.values(postsWithTags));
       return dataArray;
