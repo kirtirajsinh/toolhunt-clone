@@ -49,7 +49,7 @@ const Filter = () => {
   };
 
   return (
-    <div className="w-full lg:max-w-5xl mx-auto overflow-x-auto relative flex items-center justify-center mb-12 px-8 lg:px-0">
+    <div className="w-full lg:max-w-5xl mx-auto overflow-x-auto relative flex items-center justify-center mb-12 px-6 lg:px-0">
       <div
         className="icon py-1.5 px-3 flex justify-between items-center rounded-full cursor-pointer absolute top-0 ml-6 lg:ml-0"
         style={{

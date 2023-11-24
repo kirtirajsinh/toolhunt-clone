@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Offer = () => {
   return (
-    <div className="px-8 lg:px-0">
+    <div className="px-6 lg:px-0">
       <div
         className="flex flex-row flex-wrap md:flex-nowrap items-center w-full max-w-5xl p-6 md:px-9 md:py-8 mt-8 mx-auto bg-cover rounded-xl overflow-hidden gap-6 md:gap-8"
         style={{ backgroundImage: "url(/offer-bg.png)" }}

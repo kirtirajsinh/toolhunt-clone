@@ -5,7 +5,7 @@ const SearchBar = () => {
   const [searchText, setSearchText] = useState("");
 
   return (
-    <div className="max-w-5xl mx-auto w-full px-8 lg:px-0">
+    <div className="max-w-5xl mx-auto w-full px-6 lg:px-0">
       <div className="rounded-full border-border border-2 relative">
         <input
           type="text"

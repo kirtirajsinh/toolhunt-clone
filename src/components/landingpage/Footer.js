@@ -4,7 +4,7 @@ import SocialDiv from "./SocialDiv";
 const Footer = () => {
   return (
     <div className="bg-secondary-background w-full py-6">
-      <div className="max-w-5xl mx-auto flex flex-row items-center justify-between w-full py-10 px-8 lg:px-0 gap-8 md:gap-0">
+      <div className="max-w-5xl mx-auto flex flex-row items-center justify-between w-full py-10 px-6 lg:px-0 gap-8 md:gap-0">
         <div className="flex flex-col md:flex-row gap-16 w-1/2">
           <div className="flex flex-col gap-2">
             <p className="text-xl md:text-2xl font-bold tracking-wider">Logo</p>
