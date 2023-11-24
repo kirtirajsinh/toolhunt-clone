@@ -20,11 +20,11 @@ const Hero = () => {
         </p>
       </div>
       <Image
-        src="/hero-bg1.png"
+        src="/hero-bg2.png"
         width={400}
         height={320}
         alt=""
-        className="lg:flex-1 absolute right-0 lg:static rotate-180 max-w-[250px] lg:max-w-full"
+        className="lg:flex-1 absolute right-0 lg:static max-w-[250px] lg:max-w-full"
       />
     </div>
   );

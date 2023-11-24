@@ -72,6 +72,43 @@
   }
 }
 
+.icon:first-child {
+  left: 0;
+  display: none;
+  background: linear-gradient(90deg, #000 70%, transparent);
+}
+.icon:last-child {
+  right: 0;
+  justify-content: flex-end;
+  background: linear-gradient(-90deg, #000 70%, transparent);
+}
+ .tabs-box {
+  display: flex;
+  gap: 12px;
+  list-style: none;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+.tabs-box.dragging {
+  scroll-behavior: auto;
+  cursor: grab;
+}
+.tabs-box .tab {
+  cursor: pointer;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  padding: 4px 12px;
+  border-radius: 30px;
+  border: 1px solid hsl(var(--border));
+}
+.tabs-box.dragging .tab {
+  user-select: none;
+  pointer-events: none;
+}
+.tabs-box .tab.active{
+  border: 1px solid #0eca90;
+}
+
 @layer base {
   * {
     @apply border-border;
