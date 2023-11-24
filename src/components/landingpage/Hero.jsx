@@ -12,10 +12,10 @@ const Hero = () => {
         className="lg:flex-1 z-10 absolute left-0 lg:static max-w-[250px] lg:max-w-full"
       />
       <div className="w-full lg:w-6/12 z-20">
-        <h1 className="text-5xl md:text-6xl font-bold text-center">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center">
           <Balancer>Discover the best AI tools for EveryDay</Balancer>
         </h1>
-        <p className="text-center mt-8 font-sans">
+        <p className="text-center mt-4 font-sans w-4/5 mx-auto md:w-full">
           Unlock productivity with 5620+ AI tools & growing
         </p>
       </div>

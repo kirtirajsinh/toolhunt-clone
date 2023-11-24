@@ -13,11 +13,11 @@ const NavBar = () => {
             <SocialDiv icon="/icons/plane.svg" text="34k" />
           </div>
         </div>
-        <div className="flex flex-row items-center space-x-4">
-          <Link href="/submit" className="">
-            Submit
-          </Link>
-          <Link href="/">Watchlist</Link>
+        <div className="flex flex-row items-center gap-4">
+          <div className="hidden md:flex gap-4">
+            <Link href="/submit">Submit</Link>
+            <Link href="/">Watchlist</Link>
+          </div>
 
           <LoginButton />
         </div>
