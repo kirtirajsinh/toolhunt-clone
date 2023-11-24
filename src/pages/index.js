@@ -4,11 +4,15 @@ import Explore from "@/components/landingpage/Explore";
 import Footer from "@/components/landingpage/Footer";
 import { prisma } from "@/lib/prisma";
 import Hero from "@/components/landingpage/Hero";
+import Filter from "@/components/landingpage/Filter";
+import SearchBar from "@/components/landingpage/SearchBar";
 
 export default function Home({ post }) {
   return (
     <main className={`flex min-h-screen flex-col`}>
       <Hero />
+      <Filter />
+      <SearchBar />
       <Offer />
       <Trending />
       <Explore post={post} />
@@ -31,8 +35,6 @@ export async function getServerSideProps() {
   };
 
   const post = await getPosts();
-
-  console.log(post, "jobs from the job calling function");
 
   return {
     props: {

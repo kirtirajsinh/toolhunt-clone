@@ -6,7 +6,7 @@ import ExploreToolCard from "./ExploreToolCard";
 const Explore = ({ post }) => {
   return (
     <>
-      <section className="flex flex-col mt-12 max-w-5xl mx-auto w-full px-8 lg:px-0">
+      <section className="flex flex-col mt-12 max-w-5xl mx-auto w-full px-6 lg:px-0">
         <ExploreHeader />
         <div className="flex flex-col gap-6">
           {post.map(

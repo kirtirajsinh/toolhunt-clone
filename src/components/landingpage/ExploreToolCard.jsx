@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const ExploreToolCard = ({
@@ -16,21 +15,21 @@ const ExploreToolCard = ({
 
   return (
     <div
-      className="w-full bg-secondary-background p-4 rounded-lg flex gap-6 relative overflow-hidden cursor-pointer"
+      className="w-full bg-secondary-background p-4 rounded-lg flex gap-6 relative overflow-hidden cursor-pointer flex-wrap md:flex-nowrap"
       onClick={() => router.push(`/tool/${id}`)}
     >
-      <div className="w-full max-w-[354px]">
+      <div className="w-full md:max-w-[354px]">
         <Image
           src={imageUrl}
           width={354}
           height={185}
           alt=""
-          className="object-cover"
+          className="object-cover w-full h-full"
         />
       </div>
       <div className="flex flex-col w-full">
         <div>
-          <div className="flex gap-3 items-center">
+          <div className="flex gap-3 items-center mb-2">
             <h4 className="font-semibold text-lg">{title}</h4>
             <span onClick={(e) => e.stopPropagation()}>
               <Image
@@ -42,7 +41,7 @@ const ExploreToolCard = ({
                 onClick={() => window.open(source)}
               />
             </span>
-            <div className="flex gap-2">
+            <div className="flex gap-2 items-center">
               <Image src="/icons/star.svg" width={16} height={16} alt="" />
               <span>{rating}</span>
             </div>
@@ -68,7 +67,7 @@ const ExploreToolCard = ({
               Premium
             </div>
           </div>
-          <p className="font-light text-sm w-[80%]">{content}</p>
+          <p className="font-light text-sm w-[80%] mb-6">{content}</p>
         </div>
         <div className="mt-auto w-full">
           <div className="flex gap-2 justify-between">
