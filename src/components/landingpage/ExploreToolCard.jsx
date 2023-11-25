@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Balancer from "react-wrap-balancer";
 
 const ExploreToolCard = ({
   id,
@@ -67,7 +68,9 @@ const ExploreToolCard = ({
               Premium
             </div>
           </div>
-          <p className="font-light text-sm w-[80%] mb-6">{content}</p>
+          <p className="font-light text-sm w-full lg:w-[80%] mb-6 text-secondary-text">
+            {content}
+          </p>
         </div>
         <div className="mt-auto w-full">
           <div className="flex gap-2 justify-between">
@@ -88,7 +91,7 @@ const ExploreToolCard = ({
             <div className="flex items-center gap-3 ml-auto">
               <div className="flex gap-2 items-center">
                 <Image src="/icons/logo.svg" width={16} height={16} alt="" />
-                <span className="font-light text-sm font-sans">157.4k</span>
+                <span className="font-light text-sm ">157.4k</span>
               </div>
               <Image
                 src="/icons/heart.svg"

@@ -76,7 +76,7 @@ const Filter = () => {
           return (
             <li
               key={tag}
-              className={`tab font-sans ${
+              className={`tab  ${
                 active === index
                   ? "bg-gradient-to-r from-[#0eca90] to-[#11c2b6]  bg-clip-text text-transparent hover:bg-transparent hover:text-[#0eca90] active"
                   : ""

@@ -48,12 +48,15 @@
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
     --primary-button: linear-gradient(90deg, #0eca90 -1.9%, #11c2b6 99.95%);
+    --primary-text: #E0E0FB;
+
 
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: #737092;
     --secondary-background: #181a27;
     --secondary-button: #222d46;
-    --secondary-text: #5ca1ff;
+    --secondary-text: #6F7494;
+
 
     --tertiary-button: #f1aa00;
 

@@ -15,7 +15,7 @@ const Hero = () => {
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center">
           <Balancer>Discover the best AI tools for EveryDay</Balancer>
         </h1>
-        <p className="text-center mt-4 font-sans w-4/5 mx-auto md:w-full">
+        <p className="text-center mt-4 text-secondary-text w-4/5 mx-auto md:w-full">
           Unlock productivity with 5620+ AI tools & growing
         </p>
       </div>
