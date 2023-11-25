@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import { useState, useRef } from "react";
 
 const tags = [
   "Explore All Tools (311)",
@@ -19,7 +19,8 @@ const tags = [
 const Filter = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [active, setActive] = useState(0);
-  const tabsBoxRef = React.useRef(null);
+  const tabsBoxRef = useRef(null);
+  const startXRef = useRef(0);
 
   const handleIcons = (scrollVal) => {
     const maxScrollableWidth =
@@ -30,20 +31,43 @@ const Filter = () => {
       maxScrollableWidth - scrollVal <= 1 ? "none" : "flex";
   };
 
-  const handleIconClick = (icon) => {
-    const scrollWidth = (tabsBoxRef.current.scrollLeft +=
-      icon === "left" ? -340 : 340);
-    handleIcons(scrollWidth);
+  const handleIconClick = (direction) => {
+    let scrollWidth;
+
+    if (typeof window !== "undefined") {
+      const isMobile = window.innerWidth <= 768;
+
+      if (isMobile) {
+        scrollWidth = tabsBoxRef.current.scrollLeft +=
+          direction === "left" ? -100 : 100;
+      } else {
+        scrollWidth = tabsBoxRef.current.scrollLeft +=
+          direction === "left" ? -340 : 340;
+      }
+
+      handleIcons(scrollWidth);
+    }
+  };
+
+  const handleStartDragging = (e) => {
+    setIsDragging(true);
+    startXRef.current = e.type.startsWith("mouse")
+      ? e.clientX
+      : e.touches[0].clientX;
   };
 
   const handleDragging = (e) => {
     if (!isDragging) return;
     tabsBoxRef.current.classList.add("dragging");
-    tabsBoxRef.current.scrollLeft -= e.movementX;
+    const currentX = e.type.startsWith("mouse")
+      ? e.clientX
+      : e.touches[0].clientX;
+    tabsBoxRef.current.scrollLeft -= currentX - startXRef.current;
     handleIcons(tabsBoxRef.current.scrollLeft);
+    startXRef.current = currentX;
   };
 
-  const handleDragStop = () => {
+  const handleStopDragging = () => {
     setIsDragging(false);
     tabsBoxRef.current.classList.remove("dragging");
   };
@@ -68,9 +92,12 @@ const Filter = () => {
       <ul
         className="tabs-box items-center"
         ref={tabsBoxRef}
-        onMouseDown={() => setIsDragging(true)}
+        onMouseDown={handleStartDragging}
         onMouseMove={handleDragging}
-        onMouseUp={handleDragStop}
+        onMouseUp={handleStopDragging}
+        onTouchStart={handleStartDragging}
+        onTouchMove={handleDragging}
+        onTouchEnd={handleStopDragging}
       >
         {tags.map((tag, index) => {
           return (

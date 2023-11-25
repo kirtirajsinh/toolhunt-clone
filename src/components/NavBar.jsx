@@ -22,67 +22,65 @@ const NavBar = () => {
   ];
 
   return (
-    <>
-      <Navbar
-        shouldHideOnScroll
-        classNames={{
-          "max-width": "64rem",
-          wrapper: "px-6 lg:px-0",
-          toggleIcon: "text-primary-text",
-        }}
-        onMenuOpenChange={setIsMenuOpen}
-        className="py-2 bg-transparent"
-      >
-        <NavbarContent>
-          <NavbarMenuToggle
-            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-            className="md:hidden"
-          />
-          <NavbarBrand className="flex gap-8">
-            <p className="font-bold text-2xl tracking-wider">Logo</p>
-            <div className="hidden md:flex gap-4">
-              <NavbarItem>
-                <SocialDiv icon="/icons/linkedin.svg" text="34k" />
-              </NavbarItem>
-              <NavbarItem>
-                <SocialDiv icon="/icons/plane.svg" text="34k" />
-              </NavbarItem>
-            </div>
-          </NavbarBrand>
-        </NavbarContent>
-        <NavbarContent justify="end">
-          <NavbarItem className="hidden md:flex">
-            <Link href="/submit">Submit</Link>
-          </NavbarItem>
-          <NavbarItem className="hidden md:flex">
-            <Link href="#">Watchlist</Link>
-          </NavbarItem>
-          <NavbarItem>
-            <LoginButton />
-          </NavbarItem>
-        </NavbarContent>
-        <NavbarMenu className="pt-8 flex gap-4">
-          {menuItems.map((item, index) => (
-            <NavbarMenuItem key={`${item.label}-${index}`}>
-              <Link
-                className="w-full text-primary-text text-xl font-medium"
-                href={item.href}
-              >
-                {item.label}
-              </Link>
-            </NavbarMenuItem>
-          ))}
-          <div className="flex gap-4 mt-auto mb-6">
-            <NavbarMenuItem>
+    <Navbar
+      shouldHideOnScroll
+      classNames={{
+        "max-width": "64rem",
+        wrapper: "px-6 lg:px-0",
+        toggleIcon: "text-primary-text",
+      }}
+      onMenuOpenChange={setIsMenuOpen}
+      className="py-2 bg-transparent"
+    >
+      <NavbarContent>
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          className="md:hidden"
+        />
+        <NavbarBrand className="flex gap-8">
+          <p className="font-bold text-2xl tracking-wider">Logo</p>
+          <div className="hidden md:flex gap-4">
+            <NavbarItem>
               <SocialDiv icon="/icons/linkedin.svg" text="34k" />
-            </NavbarMenuItem>
-            <NavbarMenuItem>
+            </NavbarItem>
+            <NavbarItem>
               <SocialDiv icon="/icons/plane.svg" text="34k" />
-            </NavbarMenuItem>
+            </NavbarItem>
           </div>
-        </NavbarMenu>
-      </Navbar>
-    </>
+        </NavbarBrand>
+      </NavbarContent>
+      <NavbarContent justify="end">
+        <NavbarItem className="hidden md:flex">
+          <Link href="/submit">Submit</Link>
+        </NavbarItem>
+        <NavbarItem className="hidden md:flex">
+          <Link href="#">Watchlist</Link>
+        </NavbarItem>
+        <NavbarItem>
+          <LoginButton />
+        </NavbarItem>
+      </NavbarContent>
+      <NavbarMenu className="pt-8 flex gap-4">
+        {menuItems.map((item, index) => (
+          <NavbarMenuItem key={`${item.label}-${index}`}>
+            <Link
+              className="w-full text-primary-text text-xl font-medium"
+              href={item.href}
+            >
+              {item.label}
+            </Link>
+          </NavbarMenuItem>
+        ))}
+        <div className="flex gap-4 mt-8">
+          <NavbarMenuItem>
+            <SocialDiv icon="/icons/linkedin.svg" text="34k" />
+          </NavbarMenuItem>
+          <NavbarMenuItem>
+            <SocialDiv icon="/icons/plane.svg" text="34k" />
+          </NavbarMenuItem>
+        </div>
+      </NavbarMenu>
+    </Navbar>
   );
 };
 
