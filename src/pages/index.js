@@ -6,12 +6,10 @@ import { prisma } from "@/lib/prisma";
 import Hero from "@/components/landingpage/Hero";
 import Filter from "@/components/landingpage/Filter";
 import SearchBar from "@/components/landingpage/SearchBar";
-import NavBar from "@/components/NavBar";
 
 export default function Home({ post }) {
   return (
     <main className={`flex min-h-screen flex-col text-primary-text`}>
-      <NavBar />
       <Hero />
       <Filter />
       <SearchBar />
