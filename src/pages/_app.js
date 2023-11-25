@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 import { SessionProvider } from "next-auth/react";
 import { Rubik } from "next/font/google";
+import { NextUIProvider } from "@nextui-org/system";
 
 export const rubik = Rubik({
   subsets: ["latin"],
@@ -13,7 +14,9 @@ export default function App({
 }) {
   return (
     <SessionProvider session={session}>
-      <Component {...pageProps} />
+      <NextUIProvider>
+        <Component {...pageProps} />
+      </NextUIProvider>
     </SessionProvider>
   );
 }
