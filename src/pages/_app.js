@@ -1,9 +1,9 @@
 import NavBar from "@/components/NavBar";
 import "@/styles/globals.css";
 import { SessionProvider } from "next-auth/react";
-import { Raleway } from "next/font/google";
+import { Rubik } from "next/font/google";
 
-export const raleway = Raleway({
+export const rubik = Rubik({
   subsets: ["latin"],
   weights: [400, 500, 600, 700, 800, 900],
 });

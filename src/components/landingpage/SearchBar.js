@@ -13,7 +13,7 @@ const SearchBar = () => {
           onChange={(e) => setSearchText(e.target.value)}
           value={searchText}
           placeholder="I want to create a..."
-          className="rounded-full w-full py-2.5 pl-6 pr-12 bg-secondary-background text-base font-sans focus:outline-none focus:ring-2"
+          className="rounded-full w-full py-2.5 pl-6 pr-12 bg-secondary-background text-base text-secondary-text placeholder:text-secondary-text focus:outline-none focus:ring-1 focus:ring-primary-text"
         />
         <Image
           src="/icons/search.svg"

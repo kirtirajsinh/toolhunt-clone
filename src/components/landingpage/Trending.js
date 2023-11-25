@@ -15,11 +15,11 @@ const Trending = () => {
               key={key}
             >
               <div className="flex flex-row justify-between gap-2 px-2 py-3 md:p-4">
-                <p>{tools.date}</p>
+                <p className="text-secondary-text">{tools.date}</p>
                 <span>|</span>
                 <p>{tools.name}</p>
               </div>
-              <Button className="font-medium px-8 py-3 rounded-lg font-sans text-base bg-gradient-to-r from-[#0eca90] to-[#11c2b6] bg-clip-text text-transparent border-[1px] border-[#0eca90] hover:bg-transparent hover:text-[#0eca90]">
+              <Button className="px-8 py-3 rounded-lg  text-base bg-gradient-to-r from-[#0eca90] to-[#11c2b6] bg-clip-text text-transparent border-[1px] border-[#0eca90] hover:bg-transparent hover:text-[#0eca90]">
                 Open Side
               </Button>
             </div>
