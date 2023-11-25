@@ -1,6 +1,7 @@
 import Advantage from "@/components/submit/Advantage";
 import Faq from "@/components/submit/Faq";
 import PricingCard from "@/components/submit/PricingCard";
+import PromoteTool from "@/components/submit/PromoteTool";
 import SubmitTool from "@/components/submit/SubmitTool";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -44,13 +45,13 @@ const Promote = () => {
           </Link>
 
           <PricingCard
-            title="Fast Track"
-            price="$49"
+            title="Promote"
+            price="$199"
             features={[
-              "NO Queue, Listed within 48 Hours",
-              "HighLighted on Home Page for 24 Hours",
-              "Estimated Clicks: 500-2000+",
-              "Listing and Traffic Forever",
+              "Contains All of Fast Track",
+              "Top spots in Home and Category pages for 7 Days",
+              "Estimated Clicks: 2000-20000+",
+              "Estimated Cost per Click - $0.005 - $0.1",
             ]}
             className={
               // if the route is at /submit then add border
@@ -62,7 +63,7 @@ const Promote = () => {
             }
           />
         </div>
-        <SubmitTool />
+        <PromoteTool />
         <Faq
           faqs={[
             {

@@ -13,7 +13,9 @@ const PricingCard = ({ title, price, features, className }) => {
       <Card className={className}>
         <CardHeader>
           <CardTitle>{title}</CardTitle>
-          <CardDescription>{price} one-time payment </CardDescription>
+          <CardDescription>
+            <span className="text-2xl">{price}</span> one-time payment{" "}
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <ul>
