@@ -3,7 +3,7 @@ import { Balancer } from "react-wrap-balancer";
 
 const Hero = () => {
   return (
-    <div className="flex my-20 relative w-full lg:max-w-7xl mx-auto items-center">
+    <div className="flex my-20 relative w-full  mx-auto items-center">
       <Image
         src="/hero-bg1.png"
         width={400}

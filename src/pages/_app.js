@@ -1,3 +1,4 @@
+import NavBar from "@/components/NavBar";
 import "@/styles/globals.css";
 import { SessionProvider } from "next-auth/react";
 import { Raleway } from "next/font/google";
@@ -13,6 +14,7 @@ export default function App({
 }) {
   return (
     <SessionProvider session={session}>
+      <NavBar />
       <Component {...pageProps} />
     </SessionProvider>
   );
