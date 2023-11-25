@@ -6,41 +6,23 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
-const Submit = () => {
+const Promote = () => {
   const router = useRouter();
   return (
     <>
       <div className="flex flex-col md:mx-36 mx-auto px-6">
-        <h1 className="font-bold text-2xl tracking-wider ">Submit A Tool</h1>
+        <h1 className="font-bold text-2xl tracking-wider">
+          Promote-Get Featured
+        </h1>
         <p className="mt-5">
-          We are always looking for the latest and greatest AI tools for our
-          users. We are always looking for and listing great AI features on the
-          internet and social media platforms, which means we will likely find
-          your tool and list it. However, you can quickly submit it to be
-          featured in front of your clients.
+          We are committed to be the best AI Tools Directory. You can get the
+          most direct website traffic and user clicks with get featured for your
+          website tool.
         </p>
-        <Advantage />
 
+        <Advantage />
         <div className="flex sm:flex-row items-center flex-col justify-center gap-6  mt-20 sm:mt-32">
-          <PricingCard
-            title="Fast Track"
-            price="$49"
-            features={[
-              "NO Queue, Listed within 48 Hours",
-              "HighLighted on Home Page for 24 Hours",
-              "Estimated Clicks: 500-2000+",
-              "Listing and Traffic Forever",
-            ]}
-            className={
-              // if the route is at /submit then add border
-              `  ${
-                router.asPath === "/submit"
-                  ? " border border-tertiary-button"
-                  : ""
-              }`
-            }
-          />
-          <Link href="/promote">
+          <Link href="/submit">
             <PricingCard
               title="Fast Track"
               price="$49"
@@ -52,14 +34,33 @@ const Submit = () => {
               ]}
               className={
                 // if the route is at /submit then add border
-                `${
-                  router.asPath === "/promote"
+                ` ${
+                  router.asPath === "/submit"
                     ? " border border-tertiary-button"
                     : ""
                 }`
               }
             />
           </Link>
+
+          <PricingCard
+            title="Fast Track"
+            price="$49"
+            features={[
+              "NO Queue, Listed within 48 Hours",
+              "HighLighted on Home Page for 24 Hours",
+              "Estimated Clicks: 500-2000+",
+              "Listing and Traffic Forever",
+            ]}
+            className={
+              // if the route is at /submit then add border
+              `${
+                router.asPath === "/promote"
+                  ? " border border-tertiary-button"
+                  : ""
+              }`
+            }
+          />
         </div>
         <SubmitTool />
         <Faq
@@ -91,4 +92,4 @@ const Submit = () => {
   );
 };
 
-export default Submit;
+export default Promote;
