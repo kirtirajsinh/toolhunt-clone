@@ -1,4 +1,3 @@
-import NavBar from "@/components/NavBar";
 import Offer from "@/components/landingpage/Offer";
 import Trending from "@/components/landingpage/Trending";
 import Explore from "@/components/landingpage/Explore";
@@ -11,7 +10,6 @@ import SearchBar from "@/components/landingpage/SearchBar";
 export default function Home({ post }) {
   return (
     <main className={`flex min-h-screen flex-col text-primary-text`}>
-      <NavBar />
       <Hero />
       <Filter />
       <SearchBar />

@@ -1,3 +1,4 @@
+import NavBar from "@/components/NavBar";
 import "@/styles/globals.css";
 import { SessionProvider } from "next-auth/react";
 import { Rubik } from "next/font/google";
@@ -15,6 +16,7 @@ export default function App({
   return (
     <SessionProvider session={session}>
       <NextUIProvider>
+        <NavBar />
         <Component {...pageProps} />
       </NextUIProvider>
     </SessionProvider>
