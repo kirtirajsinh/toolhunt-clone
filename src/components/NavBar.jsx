@@ -1,28 +1,86 @@
 import Link from "next/link";
 import LoginButton from "./LoginButton";
 import SocialDiv from "./landingpage/SocialDiv";
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  NavbarMenu,
+  NavbarMenuItem,
+  NavbarMenuToggle,
+} from "@nextui-org/navbar";
+import { useState } from "react";
 
 const NavBar = () => {
-  return (
-    <div className="h-28 flex items-center w-full">
-      <div className="max-w-5xl mx-auto flex flex-row items-center justify-between w-full px-6 lg:px-0">
-        <div className="flex gap-8 items-center">
-          <p className="font-bold text-2xl tracking-wider">Logo</p>
-          <div className="gap-4 hidden md:flex">
-            <SocialDiv icon="/icons/linkedin.svg" text="34k" />
-            <SocialDiv icon="/icons/plane.svg" text="34k" />
-          </div>
-        </div>
-        <div className="flex flex-row items-center gap-4">
-          <div className="hidden md:flex gap-4">
-            <Link href="/submit">Submit</Link>
-            <Link href="/">Watchlist</Link>
-          </div>
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const menuItems = [
+    { label: "Home", href: "/" },
+    { label: "Submit", href: "/submit" },
+    { label: "Watchlist", href: "/" },
+  ];
+
+  return (
+    <Navbar
+      shouldHideOnScroll
+      classNames={{
+        "max-width": "64rem",
+        wrapper: "px-6 lg:px-0",
+        toggleIcon: "text-primary-text",
+      }}
+      onMenuOpenChange={setIsMenuOpen}
+      className="py-2 bg-transparent"
+    >
+      <NavbarContent>
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          className="md:hidden"
+        />
+        <NavbarBrand className="flex gap-8">
+          <p className="font-bold text-2xl tracking-wider">Logo</p>
+          <div className="hidden md:flex gap-4">
+            <NavbarItem>
+              <SocialDiv icon="/icons/linkedin.svg" text="34k" />
+            </NavbarItem>
+            <NavbarItem>
+              <SocialDiv icon="/icons/plane.svg" text="34k" />
+            </NavbarItem>
+          </div>
+        </NavbarBrand>
+      </NavbarContent>
+      <NavbarContent justify="end">
+        <NavbarItem className="hidden md:flex">
+          <Link href="/submit">Submit</Link>
+        </NavbarItem>
+        <NavbarItem className="hidden md:flex">
+          <Link href="#">Watchlist</Link>
+        </NavbarItem>
+        <NavbarItem>
           <LoginButton />
+        </NavbarItem>
+      </NavbarContent>
+      <NavbarMenu className="pt-8 flex gap-4">
+        {menuItems.map((item, index) => (
+          <NavbarMenuItem key={`${item.label}-${index}`}>
+            <Link
+              className="w-full text-primary-text text-xl font-medium"
+              href={item.href}
+            >
+              {item.label}
+            </Link>
+          </NavbarMenuItem>
+        ))}
+        <div className="flex gap-4 mt-8">
+          <NavbarMenuItem>
+            <SocialDiv icon="/icons/linkedin.svg" text="34k" />
+          </NavbarMenuItem>
+          <NavbarMenuItem>
+            <SocialDiv icon="/icons/plane.svg" text="34k" />
+          </NavbarMenuItem>
         </div>
-      </div>
-    </div>
+      </NavbarMenu>
+    </Navbar>
   );
 };
 

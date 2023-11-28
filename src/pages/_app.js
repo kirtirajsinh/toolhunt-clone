@@ -2,6 +2,7 @@ import NavBar from "@/components/NavBar";
 import "@/styles/globals.css";
 import { SessionProvider } from "next-auth/react";
 import { Rubik } from "next/font/google";
+import { NextUIProvider } from "@nextui-org/system";
 
 export const rubik = Rubik({
   subsets: ["latin"],
@@ -14,8 +15,10 @@ export default function App({
 }) {
   return (
     <SessionProvider session={session}>
-      <NavBar />
-      <Component {...pageProps} />
+      <NextUIProvider>
+        <NavBar />
+        <Component {...pageProps} />
+      </NextUIProvider>
     </SessionProvider>
   );
 }
