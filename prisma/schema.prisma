@@ -58,18 +58,20 @@ model VerificationToken {
 }
 
 model Post {
-  id        String      @id @default(cuid())
-  title     String
-  content   String?
-  imageUrl  String?
-  featured  Boolean?
-  rating    Int?
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @default(now())
-  author    User        @relation(fields: [authorId], references: [id])
-  tags      ItemsTags[]
-  source    String
-  authorId  String
+  id         String      @id @default(cuid())
+  title      String
+  content    String?
+  imageUrl   String?
+  featured   Boolean?
+  rating     Int?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @default(now())
+  author     User        @relation(fields: [authorId], references: [id])
+  categories String[]
+  tags       String[]
+  source     String
+  authorId   String
+  ItemsTags  ItemsTags[]
 }
 
 model Tag {
