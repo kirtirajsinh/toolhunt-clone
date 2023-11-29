@@ -19,7 +19,7 @@ const ExploreToolCard = ({
       className="w-full bg-secondary-background p-4 rounded-lg flex gap-6 relative overflow-hidden cursor-pointer flex-wrap md:flex-nowrap"
       onClick={() => router.push(`/tool/${id}`)}
     >
-      <div className="w-full md:max-w-[354px]">
+      <div className="w-full md:max-w-[354px] md:max-h-[200px]">
         <Image
           src={imageUrl}
           width={354}
@@ -73,10 +73,11 @@ const ExploreToolCard = ({
           </p>
         </div>
         <div className="mt-auto w-full">
-          <div className="flex gap-2 justify-between">
+          <div className="flex flex-col sm:flex-row gap-2 justify-between">
             {tags && (
-              <div className="flex gap-2">
-                {tags?.map((tag) => {
+              <div className="flex gap-2 flex-wrap w-fit">
+                {/* show max. 8 tags */}
+                {tags?.slice(0, 4).map((tag) => {
                   return (
                     <div
                       key={tag}
@@ -88,17 +89,23 @@ const ExploreToolCard = ({
                 })}
               </div>
             )}
-            <div className="flex items-center gap-3 ml-auto">
-              <div className="flex gap-2 items-center">
-                <Image src="/icons/logo.svg" width={16} height={16} alt="" />
-                <span className="font-light text-sm ">157.4k</span>
+            <div className="flex items-center ml-auto mt-1 self-start">
+              <div className="flex gap-1 items-center">
+                <Image
+                  src="/icons/logo.svg"
+                  width={16}
+                  height={16}
+                  alt=""
+                  className="w-4 h-4"
+                />
+                <span className="font-light text-sm">157.4k</span>
               </div>
               <Image
                 src="/icons/heart.svg"
                 width={16}
                 height={16}
                 alt=""
-                className="cursor-pointer"
+                className="cursor-pointer w-4 h-4 ml-4"
               />
             </div>
           </div>
