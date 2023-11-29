@@ -30,6 +30,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.12.0",
+    "react-intersection-observer": "^9.5.3",
     "react-wrap-balancer": "^1.1.0",
     "stripe": "^14.5.0",
     "tailwind-merge": "^2.0.0",
