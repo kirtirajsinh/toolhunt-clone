@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { Spinner } from "../ui/Spinner";
+import { useTools } from "../hooks/tools";
 
-const LoadMore = ({ setTools, tools, cursor, setCursor }) => {
+const LoadMore = () => {
   const { ref, inView } = useInView();
-
+  const addTools = useTools((state) => state.addTools);
+  const cursor = useTools((state) => state.cursor);
+  const setCursor = useTools((state) => state.setCursor);
   useEffect(() => {
     if (inView) {
       getTools();
@@ -15,10 +18,11 @@ const LoadMore = ({ setTools, tools, cursor, setCursor }) => {
   const getTools = async () => {
     const response = await fetch(`/api/fetchTools?page=${cursor}`);
     const data = await response.json();
-    setTools([...tools, ...data]);
+    // setTools([...tools, ...data]);
     const newCursor = data.length > 0 && data[data.length - 1]?.id;
     console.log(cursor, "cursor before update");
     console.log(newCursor, "new Cusor after update");
+    addTools(data);
     setCursor(newCursor);
   };
   return (

@@ -1,18 +1,27 @@
+import { useTools } from "@/components/hooks/tools";
 import Explore from "@/components/landingpage/Explore";
 import Filter from "@/components/landingpage/Filter";
 import Hero from "@/components/landingpage/Hero";
 import SearchBar from "@/components/landingpage/SearchBar";
 import { prisma } from "@/lib/prisma";
-import React from "react";
+import React, { useEffect } from "react";
 
 const New = ({ post, cursor }) => {
   console.log(cursor, "cursor from SSP");
+  const setCursor = useTools((state) => state.setCursor);
+  const addTools = useTools((state) => state.addTools);
+  useEffect(() => {
+    if (!cursor || !post) return;
+    setCursor(cursor);
+    addTools(post);
+  }, [cursor]);
+
   return (
     <main className={`flex min-h-screen flex-col text-primary-text`}>
       <Hero />
       <Filter />
       <SearchBar />
-      <Explore post={post} cursor={cursor} />
+      <Explore />
     </main>
   );
 };

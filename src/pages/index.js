@@ -6,8 +6,17 @@ import { prisma } from "@/lib/prisma";
 import Hero from "@/components/landingpage/Hero";
 import Filter from "@/components/landingpage/Filter";
 import SearchBar from "@/components/landingpage/SearchBar";
+import { useTools } from "@/components/hooks/tools";
+import { useEffect } from "react";
 
 export default function Home({ post }) {
+  const tools = useTools((state) => state.tools);
+  const addTools = useTools((state) => state.addTools);
+
+  useEffect(() => {
+    if (tools.length > 0) return;
+    addTools(post);
+  }, [post]);
   return (
     <main className={`flex min-h-screen flex-col text-primary-text`}>
       <Hero />
