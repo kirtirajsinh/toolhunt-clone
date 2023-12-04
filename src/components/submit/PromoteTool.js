@@ -44,7 +44,7 @@ const PromoteTool = () => {
             onChange={(event) => {
               setFormData({ ...formData, name: event.target.value });
             }}
-            className="p-2 rounded-md"
+            className="p-2 rounded-md border-[1px] border-[#0eca90] bg-transparent"
           ></input>
           <label>Site URL:</label>
           <input
@@ -53,7 +53,7 @@ const PromoteTool = () => {
             onChange={(event) => {
               setFormData({ ...formData, siteURL: event.target.value });
             }}
-            className="p-2 rounded-md"
+            className="p-2 rounded-md border-[1px] border-[#0eca90] bg-transparent "
           ></input>
           <button
             type="submit"
