@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import { SessionProvider } from "next-auth/react";
 import { Rubik } from "next/font/google";
 import { NextUIProvider } from "@nextui-org/system";
+import Footer from "@/components/landingpage/Footer";
 
 export const rubik = Rubik({
   subsets: ["latin"],
@@ -18,6 +19,7 @@ export default function App({
       <NextUIProvider>
         <NavBar />
         <Component {...pageProps} />
+        <Footer />
       </NextUIProvider>
     </SessionProvider>
   );
