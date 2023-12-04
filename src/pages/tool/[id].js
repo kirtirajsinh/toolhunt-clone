@@ -1,3 +1,6 @@
+import { useTools } from "@/components/hooks/tools";
+import ExploreToolCard from "@/components/landingpage/ExploreToolCard";
+import ShareButton from "@/components/ui/ShareButton";
 import { Button } from "@/components/ui/button";
 import { AIData } from "@/lib/AIToolsData";
 import { prisma } from "@/lib/prisma";
@@ -9,18 +12,31 @@ const Tool = ({ tool }) => {
   const router = useRouter();
   const { id: toolId } = router.query;
   console.log(tool, "tool Data");
+  const tools = useTools((state) => state.tools);
+  console.log(tools, "tools from the global state");
 
   return (
     <>
       <div className="flex flex-col mt-12 max-w-5xl mx-auto w-full px-6 lg:px-0  min-h-screen">
-        <div className="flex flex-row items-center space-x-12">
-          <p className="md:text-5xl text-2xl font-bold">{tool?.title}</p>
-          <Button
-            onClick={() => window.open(`${tool.source}`, "_blank")}
-            className="font-semibold flex gap-2 items-center rounded-full hover:shadow-md px-6 md:px-8 py-2 bg-gradient-to-r from-[#0eca90] to-[#11c2b6]  bg-clip-text text-transparent border-[1px] border-[#0eca90] hover:bg-transparent hover:text-[#0eca90]"
-          >
-            Visit Site{" "}
-          </Button>
+        <div className="flex flex-col md:flex-row md:items-center justify-between">
+          <div className="flex flex-row items-center space-x-12">
+            <p className="md:text-5xl text-2xl font-bold">{tool?.title}</p>
+            <Button
+              onClick={() => window.open(`${tool.source}`, "_blank")}
+              className="font-semibold flex gap-2 items-center rounded-full hover:shadow-md px-6 md:px-8 py-2 bg-gradient-to-r from-[#0eca90] to-[#11c2b6]  bg-clip-text text-transparent border-[1px] border-[#0eca90] hover:bg-transparent hover:text-[#0eca90]"
+            >
+              Visit Site{" "}
+            </Button>
+          </div>
+          <div>
+            <ShareButton
+              title={tool?.title}
+              url={
+                // share the current url
+                `https://toolhunt.ai/tool/${tool?.id}`
+              }
+            />
+          </div>
         </div>
         <p className="text-secondary-text mt-3">
           Unlock Productivity with 5260+ AI tools & growing{" "}
