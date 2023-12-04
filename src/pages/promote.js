@@ -11,11 +11,11 @@ const Promote = () => {
   const router = useRouter();
   return (
     <>
-      <div className="flex flex-col md:mx-36 mx-auto px-6">
-        <h1 className="font-bold text-2xl tracking-wider">
+      <div className="flex flex-col max-w-5xl mx-auto w-full px-6 lg:px-0  min-h-screen">
+        <h1 className="font-bold text-2xl tracking-wider  mt-4">
           Promote-Get Featured
         </h1>
-        <p className="mt-5">
+        <p className="mt-5 text-secondary-text">
           We are committed to be the best AI Tools Directory. You can get the
           most direct website traffic and user clicks with get featured for your
           website tool.
@@ -26,7 +26,7 @@ const Promote = () => {
           <Link href="/submit">
             <PricingCard
               title="Fast Track"
-              price="$49"
+              price="FREE"
               features={[
                 "NO Queue, Listed within 48 Hours",
                 "HighLighted on Home Page for 24 Hours",

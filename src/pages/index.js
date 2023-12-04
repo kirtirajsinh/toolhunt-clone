@@ -1,7 +1,6 @@
 import Offer from "@/components/landingpage/Offer";
 import Trending from "@/components/landingpage/Trending";
 import Explore from "@/components/landingpage/Explore";
-import Footer from "@/components/landingpage/Footer";
 import { prisma } from "@/lib/prisma";
 import Hero from "@/components/landingpage/Hero";
 import Filter from "@/components/landingpage/Filter";
@@ -25,7 +24,6 @@ export default function Home({ post }) {
       <Offer />
       <Trending />
       <Explore post={post} />
-      <Footer />
     </main>
   );
 }

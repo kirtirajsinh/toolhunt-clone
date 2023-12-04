@@ -10,9 +10,11 @@ const Submit = () => {
   const router = useRouter();
   return (
     <>
-      <div className="flex flex-col md:mx-36 mx-auto px-6">
-        <h1 className="font-bold text-2xl tracking-wider ">Submit A Tool</h1>
-        <p className="mt-5">
+      <div className="flex flex-col  max-w-5xl mx-auto w-full px-6 lg:px-0  min-h-screen">
+        <h1 className="font-bold text-2xl tracking-wider mt-4 ">
+          Submit A Tool
+        </h1>
+        <p className="mt-5  text-secondary-text">
           We are always looking for the latest and greatest AI tools for our
           users. We are always looking for and listing great AI features on the
           internet and social media platforms, which means we will likely find
@@ -24,7 +26,7 @@ const Submit = () => {
         <div className="flex sm:flex-row items-center flex-col justify-center gap-6  mt-20 sm:mt-32">
           <PricingCard
             title="Fast Track"
-            price="$49"
+            price="FREE"
             features={[
               "NO Queue, Listed within 48 Hours",
               "HighLighted on Home Page for 24 Hours",
