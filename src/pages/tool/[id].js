@@ -18,8 +18,8 @@ const Tool = ({ tool }) => {
   return (
     <>
       <div className="flex flex-col mt-12 max-w-5xl mx-auto w-full px-6 lg:px-0  min-h-screen">
-        <div className="flex flex-col md:flex-row md:items-center justify-between">
-          <div className="flex flex-row items-center space-x-12">
+        <div className="flex flex-row md:flex-row md:items-center justify-between">
+          <div className="flex flex-row  items-center space-x-12">
             <p className="md:text-5xl text-2xl font-bold">{tool?.title}</p>
             <Button
               onClick={() => window.open(`${tool.source}`, "_blank")}
@@ -81,6 +81,31 @@ const Tool = ({ tool }) => {
               })}
             </div>
           </div>
+        </div>
+        <div className="mt-12 flex flex-col space-y-12">
+          <h1 className="md:text-3xl text-2xl font-bold">Similar Products</h1>
+          {tools
+            .filter(
+              (similarTool) =>
+                similarTool.id !== tool.id &&
+                similarTool.categories.filter((category) =>
+                  tool.categories.includes(category)
+                ).length >= 2
+            )
+            .map((similarTool) => (
+              <div key={similarTool.id} className="gap-6 ">
+                <ExploreToolCard
+                  id={similarTool.id}
+                  imageUrl={similarTool.imageUrl}
+                  title={similarTool.title}
+                  rating={similarTool.rating}
+                  content={similarTool.content}
+                  featured={similarTool.featured}
+                  source={similarTool.source}
+                  tags={similarTool.tags}
+                />
+              </div>
+            ))}
         </div>
       </div>
     </>
