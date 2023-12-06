@@ -1,6 +1,7 @@
 import React from "react";
 import { TwitterShareButton } from "react-share";
 import { BsTwitterX } from "react-icons/Bs";
+import Image from "next/image";
 
 const ShareButton = ({ title, url }) => {
   return (
@@ -11,7 +12,13 @@ const ShareButton = ({ title, url }) => {
           url={url}
           className="flex flex-row items-center space-x-2   "
         >
-          <BsTwitterX /> <span>Share</span>
+          <Image
+            src="/icons/twitter.svg"
+            width={20}
+            height={20}
+            alt="Twitter logo"
+          />
+          <span>Share</span>
         </TwitterShareButton>
       </div>
     </div>
