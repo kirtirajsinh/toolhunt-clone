@@ -1,6 +1,5 @@
 import React from "react";
 import { TwitterShareButton } from "react-share";
-import { BsTwitterX } from "react-icons/Bs";
 import Image from "next/image";
 
 const ShareButton = ({ title, url }) => {
