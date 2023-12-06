@@ -18,7 +18,7 @@ const NavBar = () => {
   const menuItems = [
     { label: "Home", href: "/" },
     { label: "Submit", href: "/submit" },
-    { label: "Watchlist", href: "/" },
+    { label: "Explore", href: "/new" },
   ];
 
   return (
@@ -54,7 +54,7 @@ const NavBar = () => {
           <Link href="/submit">Submit</Link>
         </NavbarItem>
         <NavbarItem className="hidden md:flex">
-          <Link href="#">Watchlist</Link>
+          <Link href="/new">Explore</Link>
         </NavbarItem>
         <NavbarItem>
           <LoginButton />
