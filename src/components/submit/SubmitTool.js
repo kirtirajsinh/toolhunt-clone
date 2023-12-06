@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { plans } from "../../lib/utils";
 import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/router";
@@ -8,11 +8,22 @@ import { v4 as uuidv4 } from "uuid";
 import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/components/ui/use-toast";
 
+import LoginButton from "../LoginButton";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
+
 const SubmitTool = () => {
   const { router } = useRouter();
   const { data: sessionData } = useSession();
   const { toast } = useToast();
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [formData, setFormData] = React.useState({
     title: "",
@@ -23,6 +34,11 @@ const SubmitTool = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!sessionData) {
+      setIsModalOpen(true);
+      return;
+    }
+
     if (
       !formData.title ||
       !formData.siteURL ||
@@ -61,6 +77,10 @@ const SubmitTool = () => {
   };
 
   const uploadImage = async (e) => {
+    if (!sessionData) {
+      setIsModalOpen(true);
+      return;
+    }
     let file = e.target.files[0];
     console.log(file, "uploaded file");
     const uniqueID = uuidv4();
@@ -144,6 +164,22 @@ const SubmitTool = () => {
           </button>
         </form>
       </div>
+      <Dialog
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        onClose={(event) => event.preventDefault()}
+      >
+        <DialogTrigger>Open</DialogTrigger>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Login</DialogTitle>
+            <DialogDescription>Login to Submit your AI Tool</DialogDescription>
+          </DialogHeader>
+          <div className="flex items-center space-x-2">
+            <LoginButton />
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

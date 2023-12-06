@@ -1,6 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { plans } from "../../lib/utils";
 import { useRouter } from "next/router";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
+import LoginButton from "../LoginButton";
+import { useSession } from "next-auth/react";
 
 const PromoteTool = () => {
   const { router } = useRouter();
@@ -8,9 +18,15 @@ const PromoteTool = () => {
     name: "",
     siteURL: "",
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { data: sessionData } = useSession();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!sessionData) {
+      setIsModalOpen(true);
+      return;
+    }
     if (!formData.name || !formData.siteURL) {
       return;
     }
@@ -67,6 +83,22 @@ const PromoteTool = () => {
           </button>
         </form>
       </div>
+      <Dialog
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        onClose={(event) => event.preventDefault()}
+      >
+        <DialogTrigger>Open</DialogTrigger>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Login</DialogTitle>
+            <DialogDescription>Login to Promote your AI Tool</DialogDescription>
+          </DialogHeader>
+          <div className="flex items-center space-x-2">
+            <LoginButton />
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
