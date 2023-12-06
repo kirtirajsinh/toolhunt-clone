@@ -4,11 +4,16 @@ import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { supabase } from "@/lib/supabase";
+import { v4 as uuidv4 } from "uuid";
+import { Toaster } from "@/components/ui/toaster";
+import { useToast } from "@/components/ui/use-toast";
 
 const SubmitTool = () => {
   const { router } = useRouter();
   const { data: sessionData } = useSession();
-  console.log(sessionData, "sessionData in submit Tool");
+  const { toast } = useToast();
+  const [loading, setLoading] = React.useState(false);
+
   const [formData, setFormData] = React.useState({
     title: "",
     siteURL: "",
@@ -18,42 +23,66 @@ const SubmitTool = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!formData.title || !formData.siteURL) {
+    if (
+      !formData.title ||
+      !formData.siteURL ||
+      !formData.image ||
+      !formData.description
+    ) {
       return;
     }
-    const checkout = await fetch("/api/checkout", {
-      method: "POST",
-      body: JSON.stringify({
-        itemPrice: plans[0].priceId,
-        productName: plans[0].planType,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await checkout.json();
-    console.log(data, "checkout from the submit tool page");
-    window.location.assign(data.url);
+    try {
+      setLoading(true);
+      const checkout = await fetch("/api/checkout", {
+        method: "POST",
+        body: JSON.stringify({ formData }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await checkout.json();
+      console.log(data);
+      if (data) {
+        toast({
+          title: "Tool Submitted SucessFully",
+        });
+      }
+      setLoading(false);
+    } catch (e) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      });
+      console.log(e);
+      setLoading(false);
+    }
+    setLoading(false);
   };
 
   const uploadImage = async (e) => {
     let file = e.target.files[0];
     console.log(file, "uploaded file");
-    const { data, error } = await supabase.storage
+    const uniqueID = uuidv4();
+    const { data: imageUploaded, error } = await supabase.storage
       .from("images")
-      .upload(sessionData?.user.id.id + "/" + file.name, file);
+      .upload(sessionData?.user.id.id + "/" + uniqueID, file);
 
-    if (data) {
-      console.log("Image uploaded successfully", data);
-      const { publicURL, error } = supabase.storage
+    if (imageUploaded) {
+      // get image URL
+      const { data } = supabase.storage
         .from("images")
-        .getPublicUrl(sessionData?.user.id.id + "/" + file.name);
+        .getPublicUrl(`${sessionData?.user.id.id}/${uniqueID}`);
+
+      console.log(data.publicUrl, "image URL");
+      setFormData({ ...formData, image: data.publicUrl });
     } else {
       console.log("Image upload failed", error);
     }
   };
   return (
     <>
+      <Toaster />
       <div className="flex flex-col items-center sm:mt-32 mt-20">
         <h1 className="font-bold text-2xl tracking-wider">Submit a Tool</h1>
         <form
@@ -103,6 +132,7 @@ const SubmitTool = () => {
             ></input>
           </label>
           <button
+            disabled={loading}
             type="submit"
             className="p-2 px-4 w-fit self-center rounded-md 
             "
