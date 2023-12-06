@@ -35,6 +35,7 @@ export const authOptions = {
           });
         }
       }
+      session.user.id = user
       return session;
     },
   },
