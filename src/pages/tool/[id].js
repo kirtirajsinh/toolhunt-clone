@@ -11,7 +11,7 @@ import React from "react";
 const Tool = ({ tool }) => {
   const router = useRouter();
   const { id: toolId } = router.query;
-  console.log(tool, "tool Data");
+  console.log(tool.postCategories, "tool Data");
   const tools = useTools((state) => state.tools);
   console.log(tools, "tools from the global state");
 
@@ -69,13 +69,13 @@ const Tool = ({ tool }) => {
             </div>
 
             <div className="flex  md:flex-row flex-wrap mt-3">
-              {tool.categories?.map((category, key) => {
+              {tool.postCategories?.map((category, key) => {
                 return (
                   <div
                     key={key}
                     className="  bg-secondary-background rounded-full px-3 py-1 text-xs font-semibold rounded border  mr-2 mb-2"
                   >
-                    {category}
+                    {category.title}
                   </div>
                 );
               })}
@@ -132,6 +132,10 @@ export async function getServerSideProps(context) {
       const tool = await prisma.post.findUnique({
         where: {
           id: toolId,
+        },
+        include: {
+          postCategories: true,
+          postTags: true,
         },
       });
       const simplifiedTool = {
