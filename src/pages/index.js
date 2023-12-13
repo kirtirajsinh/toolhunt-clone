@@ -23,7 +23,7 @@ export default function Home({ post }) {
       <SearchBar />
       <Offer />
       <Trending />
-      <Explore post={post} />
+      <Explore />
     </main>
   );
 }
@@ -33,7 +33,13 @@ export async function getServerSideProps() {
     try {
       const postsWithTags = await prisma.post.findMany({
         take: 10,
+        include: {
+          postTags: true, // Include tags in the result if needed
+          postCategories: true, // Include categories in the result if needed
+        },
       });
+
+      console.log("Fetched posts", postsWithTags);
 
       const dataArray = [].concat(...Object.values(postsWithTags));
       return dataArray;
