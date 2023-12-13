@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Balancer from "react-wrap-balancer";
 
@@ -13,12 +14,19 @@ const ExploreToolCard = ({
   tags,
 }) => {
   const router = useRouter();
-
+  console.log(
+    id,
+    imageUrl,
+    title,
+    source,
+    rating,
+    featured,
+    content,
+    tags,
+    "tags from the explore Card page"
+  );
   return (
-    <div
-      className="w-full bg-secondary-background p-4 rounded-lg flex gap-6 relative overflow-hidden cursor-pointer flex-wrap md:flex-nowrap"
-      onClick={() => router.push(`/tool/${id}`)}
-    >
+    <div className="w-full bg-secondary-background p-4 rounded-lg flex gap-6 relative overflow-hidden cursor-pointer flex-wrap md:flex-nowrap">
       <div className="w-full md:max-w-[354px] md:max-h-[200px]">
         <Image
           src={imageUrl}
@@ -31,7 +39,12 @@ const ExploreToolCard = ({
       <div className="flex flex-col w-full">
         <div>
           <div className="flex gap-3 items-center mb-2">
-            <h4 className="font-semibold text-lg">{title}</h4>
+            <h4
+              className="font-semibold text-lg hover:text-primary-button cursor-pointer"
+              onClick={() => router.push(`/tool/${id}`)}
+            >
+              {title}
+            </h4>
             <span onClick={(e) => e.stopPropagation()}>
               <Image
                 src="/icons/redirect.svg"
@@ -79,12 +92,13 @@ const ExploreToolCard = ({
                 {/* show max. 8 tags */}
                 {tags?.slice(0, 4).map((tag) => {
                   return (
-                    <div
-                      key={tag}
-                      className="bg-secondary rounded-sm text-tertiary-button px-2 py-1 font-light text-sm"
+                    <Link
+                      key={tag.id}
+                      href={`/category/${tag.title}`}
+                      className="bg-secondary rounded-sm text-tertiary-button px-2 py-1 font-light text-sm hover:bg-tertiary-button hover:text-secondary"
                     >
-                      {tag}
-                    </div>
+                      {tag.title}
+                    </Link>
                   );
                 })}
               </div>
