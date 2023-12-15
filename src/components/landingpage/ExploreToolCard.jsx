@@ -94,7 +94,7 @@ const ExploreToolCard = ({
                   return (
                     <Link
                       key={tag.id}
-                      href={`/category/${tag.title}`}
+                      href={`/tag/${tag.title}`}
                       className="bg-secondary rounded-sm text-tertiary-button px-2 py-1 font-light text-sm hover:bg-tertiary-button hover:text-secondary"
                     >
                       {tag.title}
