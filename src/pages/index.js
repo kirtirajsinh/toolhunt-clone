@@ -8,14 +8,16 @@ import SearchBar from "@/components/landingpage/SearchBar";
 import { useTools } from "@/components/hooks/tools";
 import { useEffect } from "react";
 
-export default function Home({ post }) {
+export default function Home({ post, categories }) {
   const tools = useTools((state) => state.tools);
   const addTools = useTools((state) => state.addTools);
-
+  const addCategories = useTools((state) => state.addCategories);
   useEffect(() => {
     if (tools.length > 0) return;
     addTools(post);
-  }, [post]);
+    if (!categories) return;
+    addCategories(categories);
+  }, [post, categories]);
   return (
     <main className={`flex min-h-screen flex-col text-primary-text`}>
       <Hero />
@@ -49,11 +51,32 @@ export async function getServerSideProps() {
     }
   };
 
+  const getCategory = async () => {
+    try {
+      const categoriesWithPostCount = await prisma.category.findMany({
+        include: {
+          _count: {
+            select: {
+              posts: true,
+            },
+          },
+        },
+      });
+      console.log("Fetched categories", categoriesWithPostCount);
+      return categoriesWithPostCount;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  };
+
   const post = await getPosts();
+  const categories = await getCategory();
 
   return {
     props: {
       post: JSON.parse(JSON.stringify(post)),
+      categories: categories,
     },
   };
 }
