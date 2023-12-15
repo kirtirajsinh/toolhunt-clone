@@ -1,26 +1,15 @@
 import Image from "next/image";
 import { useState, useRef } from "react";
-
-const tags = [
-  "Explore All Tools (311)",
-  "AI Detection (645)",
-  "Audio (438)",
-  "Avatars (432)",
-  "Business (123)",
-  "Music (342)",
-  "Coaching (32)",
-  "Fitness (69)",
-  "PDF (12)",
-  "Coaching (31)",
-  "Fitness (68)",
-  "PDF (1)",
-];
+import { useTools } from "../hooks/tools";
+import { useRouter } from "next/router";
 
 const Filter = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [active, setActive] = useState(0);
   const tabsBoxRef = useRef(null);
   const startXRef = useRef(0);
+  const categories = useTools((state) => state.categories);
+  const router = useRouter();
 
   const handleIcons = (scrollVal) => {
     const maxScrollableWidth =
@@ -99,7 +88,7 @@ const Filter = () => {
         onTouchMove={handleDragging}
         onTouchEnd={handleStopDragging}
       >
-        {tags.map((tag, index) => {
+        {categories.map((tag, index) => {
           return (
             <li
               key={tag}
@@ -108,9 +97,12 @@ const Filter = () => {
                   ? "bg-gradient-to-r from-[#0eca90] to-[#11c2b6]  bg-clip-text text-transparent hover:bg-transparent hover:text-[#0eca90] active"
                   : ""
               }`}
-              onClick={() => setActive(index)}
+              onClick={() => {
+                setActive(index);
+                router.push(`/category/${tag.title}`);
+              }}
             >
-              {tag}
+              {tag.title} {""} {tag?._count?.posts}
             </li>
           );
         })}

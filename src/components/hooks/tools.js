@@ -2,7 +2,33 @@ import { create } from "zustand";
 
 const tools = (set) => ({
   tools: [],
+  categories: [],
   cursor: "",
+  categoryCursor: "",
+  categoryWiseTools: [],
+  setCategoryCursor: (newCursor) => {
+    set(() => ({
+      categoryCursor: newCursor,
+    }));
+  },
+  addCategoryWiseTools: (newTools) => {
+    set((state) => ({
+      categoryWiseTools: [
+        ...state.categoryWiseTools,
+        ...newTools.filter(
+          (tool) =>
+            !state.categoryWiseTools.some(
+              (existingTool) => existingTool.id === tool.id
+            )
+        ),
+      ],
+    }));
+  },
+  removeCategoryWiseTools: () => {
+    set(() => ({
+      categoryWiseTools: [],
+    }));
+  },
   addTools: (newTools) => {
     set((state) => ({
       tools: [
@@ -10,6 +36,19 @@ const tools = (set) => ({
         ...newTools.filter(
           (tool) =>
             !state.tools.some((existingTool) => existingTool.id === tool.id)
+        ),
+      ],
+    }));
+  },
+  addCategories: (newCategories) => {
+    set((state) => ({
+      categories: [
+        ...state.categories,
+        ...newCategories.filter(
+          (category) =>
+            !state.categories.some(
+              (existingCategory) => existingCategory.id === category.id
+            )
         ),
       ],
     }));
