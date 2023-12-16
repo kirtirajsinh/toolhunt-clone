@@ -2,13 +2,40 @@ import { create } from "zustand";
 
 const tools = (set) => ({
   tools: [],
-  categories: [],
   cursor: "",
+
+  categories: [],
   categoryCursor: "",
   categoryWiseTools: [],
+  tagWiseTools: [],
+  tagCursor: "",
+  setTagCursor: (newCursor) => {
+    set(() => ({
+      tagCursor: newCursor,
+    }));
+  },
+
   setCategoryCursor: (newCursor) => {
     set(() => ({
       categoryCursor: newCursor,
+    }));
+  },
+  addTagWiseTools: (newTools) => {
+    set((state) => ({
+      tagWiseTools: [
+        ...state.tagWiseTools,
+        ...newTools.filter(
+          (tool) =>
+            !state.tagWiseTools.some(
+              (existingTool) => existingTool.id === tool.id
+            )
+        ),
+      ],
+    }));
+  },
+  removeTagWisetools: () => {
+    set(() => ({
+      tagWiseTools: [],
     }));
   },
   addCategoryWiseTools: (newTools) => {
