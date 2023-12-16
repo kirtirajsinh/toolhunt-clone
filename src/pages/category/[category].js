@@ -2,11 +2,9 @@ import { useTools } from "@/components/hooks/tools";
 import ExploreToolCard from "@/components/landingpage/ExploreToolCard";
 import LoadMore from "@/components/new/LoadMore";
 import { prisma } from "@/lib/prisma";
-import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 
 const Tool = ({ tools, cursor }) => {
-  const router = useRouter();
   const addCategoryWiseTools = useTools((state) => state.addCategoryWiseTools);
   const categoryWiseTools = useTools((state) => state.categoryWiseTools);
   const setCategoryCursor = useTools((state) => state.setCategoryCursor);
