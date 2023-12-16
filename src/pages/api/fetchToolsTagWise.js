@@ -1,12 +1,12 @@
 import { prisma } from "@/lib/prisma";
 
 export default async function handler(req, res) {
-  const { page, category } = req.query;
+  const { page, tag } = req.query;
   console.log(page, "page data from the query");
-  console.log(category, "category data from the query");
+  console.log(tag, "category data from the query");
   try {
     const tools = await prisma.tag.findUnique({
-      where: { title: category },
+      where: { title: tag },
 
       include: {
         Post: {
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
       },
     });
     console.log("Fetched tools", tools);
-    res.status(200).json(tools);
+    res.status(200).json(tools.Post);
   } catch (e) {
     console.error(e);
     res.status(500).json({ e });
