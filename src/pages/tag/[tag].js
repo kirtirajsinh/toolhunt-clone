@@ -1,14 +1,30 @@
+import { useTools } from "@/components/hooks/tools";
 import ExploreToolCard from "@/components/landingpage/ExploreToolCard";
+import LoadMore from "@/components/new/LoadMore";
 import { prisma } from "@/lib/prisma";
-import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 
-const Tags = ({ tools }) => {
-  const router = useRouter();
+const Tags = ({ tools, cursor }) => {
+  const addTagWiseTools = useTools((state) => state.addTagWiseTools);
+  const tagWiseTools = useTools((state) => state.tagWiseTools);
+  const setTagCursor = useTools((state) => state.setTagCursor);
+  const removeTagWisetools = useTools((state) => state.removeTagWisetools);
+  console.log(tools.Post, "tools in the tag page");
+  useEffect(() => {
+    if (!cursor || !tools) return;
+
+    removeTagWisetools();
+
+    console.log("Tag tools added and previous removed");
+
+    addTagWiseTools(tools.Post);
+
+    setTagCursor(cursor);
+  }, [tools]);
   return (
     <div className="flex flex-col mt-12 max-w-5xl mx-auto w-full px-6 space-y-6 mb-6 lg:px-0  min-h-screen">
-      {tools &&
-        tools.Post.map((tool) => (
+      {tagWiseTools &&
+        tagWiseTools.map((tool) => (
           <div key={tool.id} className="gap-6 ">
             <div className="flex flex-col space-y-12">
               <ExploreToolCard
@@ -24,6 +40,7 @@ const Tags = ({ tools }) => {
             </div>
           </div>
         ))}
+      <LoadMore />
     </div>
   );
 };
@@ -62,7 +79,7 @@ export async function getServerSideProps(context) {
         },
       });
       console.log(postsWithTag, "Post from a Tag from serverSide");
-      const cursor = postsWithTag.Post[postsWithTag.Post.length - 1].title;
+      const cursor = postsWithTag.Post[postsWithTag.Post.length - 1].id;
 
       console.log(cursor, "Cursor from getServerSideProps");
       return { postsWithTag, cursor };
