@@ -2,9 +2,11 @@ import { useTools } from "@/components/hooks/tools";
 import ExploreToolCard from "@/components/landingpage/ExploreToolCard";
 import LoadMore from "@/components/new/LoadMore";
 import { prisma } from "@/lib/prisma";
+import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 
 const Tool = ({ tools, cursor }) => {
+  const categorySlug = useRouter().query.category;
   const addCategoryWiseTools = useTools((state) => state.addCategoryWiseTools);
   const categoryWiseTools = useTools((state) => state.categoryWiseTools);
   const setCategoryCursor = useTools((state) => state.setCategoryCursor);
@@ -21,6 +23,9 @@ const Tool = ({ tools, cursor }) => {
 
   return (
     <div className="flex flex-col mt-12 max-w-5xl mx-auto w-full px-6 space-y-6 mb-6 lg:px-0  min-h-screen">
+      <h1 className="text-2xl md:text-3xl font-semibold">
+        Best {categorySlug} Tools
+      </h1>
       {categoryWiseTools &&
         categoryWiseTools.map((tool) => (
           <div key={tool.id} className="gap-6 ">
