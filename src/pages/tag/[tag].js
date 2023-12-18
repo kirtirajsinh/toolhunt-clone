@@ -2,6 +2,7 @@ import { useTools } from "@/components/hooks/tools";
 import ExploreToolCard from "@/components/landingpage/ExploreToolCard";
 import LoadMore from "@/components/new/LoadMore";
 import { prisma } from "@/lib/prisma";
+import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 
 const Tags = ({ tools, cursor }) => {
@@ -9,7 +10,7 @@ const Tags = ({ tools, cursor }) => {
   const tagWiseTools = useTools((state) => state.tagWiseTools);
   const setTagCursor = useTools((state) => state.setTagCursor);
   const removeTagWisetools = useTools((state) => state.removeTagWisetools);
-  console.log(tools.Post, "tools in the tag page");
+  const tagSlug = useRouter().query.tag;
   useEffect(() => {
     if (!cursor || !tools) return;
 
@@ -23,6 +24,7 @@ const Tags = ({ tools, cursor }) => {
   }, [tools]);
   return (
     <div className="flex flex-col mt-12 max-w-5xl mx-auto w-full px-6 space-y-6 mb-6 lg:px-0  min-h-screen">
+      <h1>Best {tagSlug} Tools</h1>
       {tagWiseTools &&
         tagWiseTools.map((tool) => (
           <div key={tool.id} className="gap-6 ">
