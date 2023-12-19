@@ -7,14 +7,25 @@ import { useRouter } from "next/router";
 const SearchBar = () => {
   const categories = useTools((state) => state.categories);
   const [filteredResult, setFilteredResult] = useState();
+  const [product, setProduct] = useState();
   const [isCardVisible, setIsCardVisible] = useState(false);
   const router = useRouter();
 
   const searchTextRef = useRef("");
   const cardRef = useRef(null);
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
     if (!searchTextRef.current) return;
+    const products = await fetch("/api/findTools", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title: searchTextRef.current }),
+    });
+    const response = await products.json();
+    console.log(response, "products");
+    setProduct(response);
     const filteredCategories = categories.filter((category) =>
       category.title.toLowerCase().includes(searchTextRef.current.toLowerCase())
     );
@@ -61,7 +72,7 @@ const SearchBar = () => {
           />
         </button>
       </form>
-      {filteredResult && isCardVisible && (
+      {(filteredResult || product) && isCardVisible && (
         <Card
           ref={cardRef}
           className=" max-w-5xl absolute inset-x-6  mx-auto px-4 z-500 mt-6 py-6 bg-secondary-background rounded shadow-md z-10"
@@ -75,6 +86,16 @@ const SearchBar = () => {
               {category.title}
             </p>
           ))}
+          {product &&
+            product.map((tool) => (
+              <p
+                className="hover:bg-primary-text md:text-lg rounded-md hover:text-secondary-text cursor-pointer py-4 px-2"
+                key={tool.id}
+                onClick={() => router.push(`/tool/${tool.id}`)}
+              >
+                {tool.title}
+              </p>
+            ))}
         </Card>
       )}
     </div>
