@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 
 const LoginButton = () => {
   const { data: sessionData } = useSession();
@@ -37,38 +38,46 @@ const LoginButton = () => {
             setOptionsVisible(!optionsVisible);
           }}
         >
-          {sessionData?.user && (
-            <div className="flex flex-row items-center space-x-4 ">
-              <div className="flex flex-row rounded-full bg-white ">
-                {sessionData?.user?.image && (
-                  <Image
-                    src={sessionData?.user?.image ?? ""}
-                    alt={sessionData?.user?.name ?? ""}
-                    width={40}
-                    height={40}
-                    className="rounded-full min-w-[20%]"
-                  />
-                )}
+          <div className="flex flex-col items-center ">
+            {sessionData?.user && (
+              <div className="flex flex-row items-center space-x-4 ">
+                <div className="flex flex-row rounded-full bg-white ">
+                  {sessionData?.user?.image && (
+                    <Image
+                      src={sessionData?.user?.image ?? ""}
+                      alt={sessionData?.user?.name ?? ""}
+                      width={40}
+                      height={40}
+                      className="rounded-full min-w-[20%]"
+                    />
+                  )}
+                </div>
+                <p className="text-sm sm:text-md ">{sessionData?.user?.name}</p>
               </div>
-              <p className="text-sm sm:text-md ">{sessionData?.user?.name}</p>
-            </div>
-          )}
-          {optionsVisible && (
-            <div
-              className="absolute mt-24 w-32 bg-white rounded-md shadow-lg z-10"
-              onClick={handleOptionsClick}
-              ref={optionsRef}
-            >
-              <div className="py-1">
-                <button
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={handleLogoutClick}
+            )}
+            {optionsVisible && (
+              <div
+                className="absolute mt-14  w-32 bg-secondary-background rounded-lg border border-border  shadow-lg z-10 "
+                onClick={handleOptionsClick}
+                ref={optionsRef}
+              >
+                <div className="py-1">
+                  <button
+                    className="block w-full text-left px-4 py-2 text-sm hover:bg-primary-foreground"
+                    onClick={handleLogoutClick}
+                  >
+                    Logout
+                  </button>
+                </div>
+                <Link
+                  href="/profile"
+                  className="block w-full text-left px-4 py-2 text-sm hover:bg-primary-foreground "
                 >
-                  Logout
-                </button>
+                  Profile
+                </Link>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       ) : (
         <button
