@@ -1,22 +1,71 @@
 import { useTools } from "@/components/hooks/tools";
 import ExploreToolCard from "@/components/landingpage/ExploreToolCard";
+import HeartIcon from "@/components/ui/HeartIcon";
 import ShareButton from "@/components/ui/ShareButton";
 import { Button } from "@/components/ui/button";
 import { AIData } from "@/lib/AIToolsData";
+import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
+import { Toaster } from "@/components/ui/toaster";
+import { useToast } from "@/components/ui/use-toast";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import LoginButton from "@/components/LoginButton";
+import { useSession } from "next-auth/react";
+import { DislikePost, LikeTool } from "@/lib/utils";
+import Link from "next/link";
 
-const Tool = ({ tool }) => {
+const Tool = ({ tool, alreadyLiked }) => {
   const router = useRouter();
   const { id: toolId } = router.query;
   console.log(tool.postCategories, "tool Data");
   const tools = useTools((state) => state.tools);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { data: sessionData } = useSession();
   console.log(tools, "tools from the global state");
+  const [isLiked, setIsLiked] = React.useState(alreadyLiked);
+  const { toast } = useToast();
+
+  const Like = async () => {
+    console.log("Liking or disliking tool");
+    if (!sessionData) {
+      setIsModalOpen(true);
+      return;
+    }
+    setIsLiked(true);
+    toast({
+      title: "Tool Liked SucessFully",
+    });
+    const like = await LikeTool(toolId);
+    console.log(like, "like from like function");
+  };
+
+  const disLike = async () => {
+    if (!sessionData) {
+      setIsModalOpen(true);
+      return;
+    }
+    setIsLiked(false);
+    toast({
+      title: "Tool Disliked ",
+    });
+    const dislike = await DislikePost(toolId);
+    console.log(dislike, "dislike from dislike function");
+  };
 
   return (
     <>
+      <Toaster />
       <div className="flex flex-col mt-12 max-w-5xl mx-auto w-full px-6 lg:px-0  min-h-screen">
         <div className="flex flex-row md:flex-row md:items-center justify-between">
           <div className="flex flex-row  items-center space-x-12">
@@ -27,6 +76,9 @@ const Tool = ({ tool }) => {
             >
               Visit Site{" "}
             </Button>
+            <button onClick={isLiked ? disLike : Like}>
+              <HeartIcon isLiked={isLiked} />
+            </button>
           </div>
           <div>
             <ShareButton
@@ -71,12 +123,13 @@ const Tool = ({ tool }) => {
             <div className="flex  md:flex-row flex-wrap mt-3">
               {tool.postCategories?.map((category, key) => {
                 return (
-                  <div
+                  <Link
+                    href={`/category/${category.title}`}
                     key={key}
-                    className="  bg-secondary-background rounded-full px-3 py-1 text-xs font-semibold rounded border  mr-2 mb-2"
+                    className="  bg-secondary-background hover:bg-secondary-foreground rounded-full px-3 py-1 text-xs font-semibold rounded border  mr-2 mb-2"
                   >
                     {category.title}
-                  </div>
+                  </Link>
                 );
               })}
             </div>
@@ -88,7 +141,7 @@ const Tool = ({ tool }) => {
             .filter(
               (similarTool) =>
                 similarTool.id !== tool.id &&
-                similarTool.categories.filter((category) =>
+                similarTool.postCategories.filter((category) =>
                   tool.categories.includes(category)
                 ).length >= 2
             )
@@ -108,6 +161,22 @@ const Tool = ({ tool }) => {
             ))}
         </div>
       </div>
+      <Dialog
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        onClose={(event) => event.preventDefault()}
+      >
+        <DialogTrigger>Open</DialogTrigger>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Login</DialogTitle>
+            <DialogDescription>Login to Like the Tool</DialogDescription>
+          </DialogHeader>
+          <div className="flex items-center space-x-2">
+            <LoginButton />
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
@@ -116,7 +185,7 @@ export default Tool;
 
 export async function getServerSideProps(context) {
   const toolId = context.query.id;
-
+  const session = await getServerSession(context.req, context.res, authOptions);
   console.log(toolId, "toolId from getServerProps");
 
   if (!toolId) {
@@ -149,10 +218,37 @@ export async function getServerSideProps(context) {
     }
   };
 
+  const existingLike = async () => {
+    try {
+      if (!session) return null;
+      const url =
+        process.env.NODE_ENV === "PROD"
+          ? "https://toolhunt-tau.vercel.app"
+          : "http://localhost:3000";
+      const response = await fetch(`${url}/api/existinglike`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          toolId: toolId,
+          userId: session.user.id.id,
+        }),
+      });
+      const data = await response.json();
+      console.log(data, "exising Like data");
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const tool = await getTool();
+  const isLiked = await existingLike();
   return {
     props: {
       tool: JSON.parse(JSON.stringify(tool)),
+      alreadyLiked: isLiked ? true : false,
     },
   };
 }
