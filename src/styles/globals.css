@@ -48,15 +48,13 @@
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
     --primary-button: linear-gradient(90deg, #0eca90 -1.9%, #11c2b6 99.95%);
-    --primary-text: #E0E0FB;
-
+    --primary-text: #e0e0fb;
 
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: #737092;
     --secondary-background: #181a27;
     --secondary-button: #222d46;
-    --secondary-text: #6F7494;
-
+    --secondary-text: #6f7494;
 
     --tertiary-button: #f1aa00;
 
@@ -85,7 +83,7 @@
   justify-content: flex-end;
   background: linear-gradient(-90deg, #000 70%, transparent);
 }
- .tabs-box {
+.tabs-box {
   display: flex;
   gap: 12px;
   list-style: none;
@@ -108,7 +106,7 @@
   user-select: none;
   pointer-events: none;
 }
-.tabs-box .tab.active{
+.tabs-box .tab.active {
   border: 1px solid #0eca90;
 }
 
@@ -119,4 +117,16 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 5px;
 }
