@@ -12,6 +12,7 @@ export default async function handler(req, res) {
           },
         },
       },
+      take: 30,
     });
     console.log("Fetched categories", categoriesWithPostCount);
     return res.status(200).json(categoriesWithPostCount);
