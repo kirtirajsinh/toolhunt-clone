@@ -222,7 +222,7 @@ export async function getServerSideProps(context) {
     try {
       if (!session) return null;
       const url =
-        process.env.NODE_ENV === "PROD"
+        process.env.NODE_ENV === "production"
           ? "https://toolhunt-tau.vercel.app"
           : "http://localhost:3000";
       const response = await fetch(`${url}/api/existinglike`, {

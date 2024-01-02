@@ -67,7 +67,7 @@ export async function getServerSideProps(context) {
           },
         });
 
-        console.log("Fetched posts", postsWithTags);
+        // console.log("Fetched posts", postsWithTags);
 
         const dataArray = [].concat(...Object.values(postsWithTags));
         return dataArray;
@@ -85,7 +85,7 @@ export async function getServerSideProps(context) {
           },
         });
 
-        console.log("Fetched posts", postsWithTags);
+        // console.log("Fetched posts", postsWithTags);
 
         const dataArray = [].concat(...Object.values(postsWithTags));
         return dataArray;
@@ -98,10 +98,13 @@ export async function getServerSideProps(context) {
 
   const getCategory = async () => {
     try {
+      console.log(process.env.NODE_ENV, "process.env.NODE_ENV");
       const url =
-        process.env.NODE_ENV === "PROD"
+        process.env.NODE_ENV === "production"
           ? "https://toolhunt-tau.vercel.app"
           : "http://localhost:3000";
+
+      console.log(url, "url from the api");
       const categoriesWithPostCount = await fetch(`${url}/api/getCategories`);
       const categoryData = await categoriesWithPostCount.json();
 
@@ -115,12 +118,11 @@ export async function getServerSideProps(context) {
   const getTrending = async () => {
     try {
       const url =
-        process.env.NODE_ENV === "PROD"
+        process.env.NODE_ENV === "production"
           ? "https://toolhunt-tau.vercel.app"
           : "http://localhost:3000";
       const post = await fetch(`${url}/api/getTrending`);
       const trending = await post.json();
-      console.log(trending, "trending from the api");
       return trending;
     } catch (error) {
       console.error(error);

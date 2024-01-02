@@ -115,7 +115,7 @@ export async function getServerSideProps() {
   const getCategory = async () => {
     try {
       const url =
-        process.env.NODE_ENV === "PROD"
+        process.env.NODE_ENV === "production"
           ? "https://toolhunt-tau.vercel.app"
           : "http://localhost:3000";
       const categoriesWithPostCount = await fetch(`${url}/api/getCategories`);
