@@ -3,7 +3,7 @@ import { create } from "zustand";
 const tools = (set) => ({
   tools: [],
   cursor: "",
-
+  trendingTools: [],
   categories: [],
   categoryCursor: "",
   categoryWiseTools: [],
@@ -14,7 +14,11 @@ const tools = (set) => ({
       tagCursor: newCursor,
     }));
   },
-
+  setTrendingTools: (newTools) => {
+    set(() => ({
+      trendingTools: newTools,
+    }));
+  },
   setCategoryCursor: (newCursor) => {
     set(() => ({
       categoryCursor: newCursor,
@@ -22,15 +26,7 @@ const tools = (set) => ({
   },
   addTagWiseTools: (newTools) => {
     set((state) => ({
-      tagWiseTools: [
-        ...state.tagWiseTools,
-        ...newTools.filter(
-          (tool) =>
-            !state.tagWiseTools.some(
-              (existingTool) => existingTool.id === tool.id
-            )
-        ),
-      ],
+      tagWiseTools: [...state.tagWiseTools, ...newTools],
     }));
   },
   removeTagWisetools: () => {
@@ -40,15 +36,7 @@ const tools = (set) => ({
   },
   addCategoryWiseTools: (newTools) => {
     set((state) => ({
-      categoryWiseTools: [
-        ...state.categoryWiseTools,
-        ...newTools.filter(
-          (tool) =>
-            !state.categoryWiseTools.some(
-              (existingTool) => existingTool.id === tool.id
-            )
-        ),
-      ],
+      categoryWiseTools: [...state.categoryWiseTools, ...newTools],
     }));
   },
   removeCategoryWiseTools: () => {
@@ -58,13 +46,7 @@ const tools = (set) => ({
   },
   addTools: (newTools) => {
     set((state) => ({
-      tools: [
-        ...state.tools,
-        ...newTools.filter(
-          (tool) =>
-            !state.tools.some((existingTool) => existingTool.id === tool.id)
-        ),
-      ],
+      tools: [...state.tools, ...newTools],
     }));
   },
   addCategories: (newCategories) => {
