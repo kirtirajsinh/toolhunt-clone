@@ -47,6 +47,7 @@ model User {
   sessions           Session[]
   Post               Post[]
   stripe_customer_id String?
+  likedPosts         Like[]
 }
 
 model VerificationToken {
@@ -74,6 +75,7 @@ model Post {
   postTags   Tag[]
 
   postCategories Category[]
+  likes          Like[]
 }
 
 model Tag {
@@ -86,4 +88,15 @@ model Category {
   id    String @id @default(cuid())
   title String @unique
   posts Post[]
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  createdAt DateTime @default(now())
+
+  @@unique([postId, userId])
 }
