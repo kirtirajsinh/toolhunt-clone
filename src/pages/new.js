@@ -3,7 +3,9 @@ import Explore from "@/components/landingpage/Explore";
 import Filter from "@/components/landingpage/Filter";
 import Hero from "@/components/landingpage/Hero";
 import SearchBar from "@/components/landingpage/SearchBar";
+import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { getServerSession } from "next-auth";
 import React, { useEffect } from "react";
 
 const New = ({ post, cursor }) => {
@@ -28,31 +30,75 @@ const New = ({ post, cursor }) => {
 
 export default New;
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+  const session = await getServerSession(context.req, context.res, authOptions);
   const getPosts = async () => {
-    try {
-      const postsWithTags = await prisma.post.findMany({
-        take: 10,
-        orderBy: {
-          id: "asc", // Ensure the posts are ordered by ID
-        },
-      });
+    if (session) {
+      try {
+        const postsWithTags = await prisma.post.findMany({
+          take: 10,
+          include: {
+            postTags: true, // Include tags in the result if needed
+            postCategories: true, // Include categories in the result if needed
+            likes: {
+              where: {
+                userId: session.user.id.id, // Filter likes to only include those by the current user
+              },
+              select: {
+                id: true, // Select only the fields you need, for example, the ID
+              },
+            },
+          },
+          orderBy: {
+            id: "asc", // Ensure the posts are ordered by ID
+          },
+        });
 
-      const cursor =
-        postsWithTags.length > 0
-          ? postsWithTags[postsWithTags.length - 1].id
-          : null;
+        const cursor =
+          postsWithTags.length > 0
+            ? postsWithTags[postsWithTags.length - 1].id
+            : null;
 
-      console.log(cursor, "cursor from the API"); // For debugging purposes
+        console.log(cursor, "cursor from the API"); // For debugging purposes
 
-      const dataArray = [].concat(...Object.values(postsWithTags));
-      return {
-        dataArray,
-        cursor,
-      };
-    } catch (error) {
-      console.error(error);
-      return []; // Return an empty array in case of an error
+        const dataArray = [].concat(...Object.values(postsWithTags));
+        return {
+          dataArray,
+          cursor,
+        };
+      } catch (error) {
+        console.error(error);
+        return []; // Return an empty array in case of an error
+      }
+    } else {
+      try {
+        const postsWithTags = await prisma.post.findMany({
+          take: 10,
+          include: {
+            postTags: true, // Include tags in the result if needed
+            postCategories: true, // Include categories in the result if needed
+          },
+          orderBy: {
+            id: "asc", // Ensure the posts are ordered by ID
+          },
+        });
+
+        const cursor =
+          postsWithTags.length > 0
+            ? postsWithTags[postsWithTags.length - 1].id
+            : null;
+
+        console.log(cursor, "cursor from the API"); // For debugging purposes
+
+        const dataArray = [].concat(...Object.values(postsWithTags));
+        return {
+          dataArray,
+          cursor,
+        };
+      } catch (error) {
+        console.error(error);
+        return []; // Return an empty array in case of an error
+      }
     }
   };
 
