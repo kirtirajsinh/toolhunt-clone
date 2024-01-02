@@ -38,7 +38,9 @@ const NavBar = () => {
           className="md:hidden"
         />
         <NavbarBrand className="flex gap-8">
-          <p className="font-bold text-2xl tracking-wider">Logo</p>
+          <Link className="font-bold text-2xl tracking-wider" href="/">
+            Logo
+          </Link>
           <div className="hidden md:flex gap-4">
             <NavbarItem>
               <SocialDiv icon="/icons/linkedin.svg" text="34k" />
