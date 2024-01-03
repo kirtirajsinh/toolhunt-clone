@@ -24,14 +24,18 @@ const Trending = () => {
               id={key}
               key={key}
             >
-              <div className="flex flex-row  truncate justify-between gap-2 px-2 py-3 md:p-4">
-                <p className="text-secondary-text">{formattedDate}</p>
+              <div className="flex  flex-row  truncate justify-between gap-2 md:px-2 px-1 py-3 md:p-4 ">
+                <p className="text-secondary-text text-xs md:text-base hidden sm:block">
+                  {formattedDate}
+                </p>
                 <span>|</span>
-                <p className="">{tools.title}</p>
+                <p className=" md:max-w-[130px] max-w-[100px] text-ellipsis text-xs md:text-lg ">
+                  {tools.title}
+                </p>
               </div>
               <Link
                 href={`/tool/${tools.id}`}
-                className="px-8 py-3  rounded-lg  text-base bg-gradient-to-r from-[#0eca90] to-[#11c2b6] bg-clip-text text-transparent border-[1px] border-[#0eca90] hover:bg-transparent hover:text-[#0eca90]"
+                className="md:px-8  md:py-3 px-4 py-2   rounded-lg  text-base bg-gradient-to-r from-[#0eca90] to-[#11c2b6] bg-clip-text text-transparent border-[1px] border-[#0eca90] hover:bg-transparent hover:text-[#0eca90]"
               >
                 Open Side
               </Link>
