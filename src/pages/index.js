@@ -98,17 +98,16 @@ export async function getServerSideProps(context) {
 
   const getCategory = async () => {
     try {
-      console.log(process.env.NODE_ENV, "process.env.NODE_ENV");
-      const url =
-        process.env.NODE_ENV === "production"
-          ? "https://toolhunt-tau.vercel.app"
-          : "http://localhost:3000";
-
-      console.log(url, "url from the api");
-      const categoriesWithPostCount = await fetch(`${url}/api/getCategories`);
-      const categoryData = await categoriesWithPostCount.json();
-
-      return categoryData;
+      const categoriesWithPostCount = await prisma.category.findMany({
+        include: {
+          _count: {
+            select: {
+              posts: true,
+            },
+          },
+        },
+      });
+      return categoriesWithPostCount;
     } catch (error) {
       console.error(error);
       return [];
@@ -117,15 +116,18 @@ export async function getServerSideProps(context) {
 
   const getTrending = async () => {
     try {
-      const url =
-        process.env.NODE_ENV === "production"
-          ? "https://toolhunt-tau.vercel.app"
-          : "http://localhost:3000";
-      const post = await fetch(`${url}/api/getTrending`);
-      const trending = await post.json();
-      return trending;
-    } catch (error) {
-      console.error(error);
+      const mostLikedPost = await prisma.post.findMany({
+        orderBy: {
+          likes: {
+            _count: "desc",
+          },
+        },
+        take: 10,
+      });
+
+      return mostLikedPost;
+    } catch (e) {
+      console.log(e);
       return [];
     }
   };
@@ -138,7 +140,7 @@ export async function getServerSideProps(context) {
     props: {
       post: JSON.parse(JSON.stringify(post)),
       categories: categories,
-      trending: trending,
+      trending: JSON.parse(JSON.stringify(trending)),
     },
   };
 }
