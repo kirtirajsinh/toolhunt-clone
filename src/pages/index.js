@@ -52,7 +52,18 @@ export async function getServerSideProps(context) {
     if (session) {
       try {
         const postsWithTags = await prisma.post.findMany({
-          take: 10,
+          take: 20,
+          orderBy: [
+            {
+              promotedUntil: "asc",
+            },
+            {
+              likes: {
+                _count: "desc",
+              },
+            },
+            // promoted in the future will be added here
+          ],
           include: {
             postTags: true, // Include tags in the result if needed
             postCategories: true, // Include categories in the result if needed
@@ -78,7 +89,17 @@ export async function getServerSideProps(context) {
     } else {
       try {
         const postsWithTags = await prisma.post.findMany({
-          take: 10,
+          take: 20,
+          orderBy: [
+            {
+              promotedUntil: "asc",
+            },
+            {
+              likes: {
+                _count: "desc",
+              },
+            },
+          ],
           include: {
             postTags: true, // Include tags in the result if needed
             postCategories: true, // Include categories in the result if needed
@@ -134,6 +155,7 @@ export async function getServerSideProps(context) {
 
   const post = await getPosts();
   const categories = await getCategory();
+  // get post with the most number of likes
   const trending = await getTrending();
 
   return {
