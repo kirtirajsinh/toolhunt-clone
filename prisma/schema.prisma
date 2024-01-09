@@ -76,6 +76,7 @@ model Post {
 
   postCategories Category[]
   likes          Like[]
+  promotedUntil  DateTime?
 }
 
 model Tag {
