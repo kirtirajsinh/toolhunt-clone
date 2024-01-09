@@ -78,9 +78,16 @@ export async function getServerSideProps(context) {
             postTags: true, // Include tags in the result if needed
             postCategories: true, // Include categories in the result if needed
           },
-          orderBy: {
-            id: "asc", // Ensure the posts are ordered by ID
-          },
+          orderBy: [
+            {
+              likes: {
+                _count: "desc",
+              },
+            },
+            {
+              id: "asc", // Ensure the posts are ordered by ID
+            },
+          ],
         });
 
         const cursor =
