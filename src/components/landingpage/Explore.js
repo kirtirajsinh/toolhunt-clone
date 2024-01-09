@@ -43,6 +43,7 @@ const Explore = () => {
                   tags={tool.postTags}
                   isLiked={tool?.likes?.length > 0}
                   setIsModalOpen={(response) => setIsModalOpen(response)}
+                  promotedUntil={tool.promotedUntil}
                 />
               );
             })}

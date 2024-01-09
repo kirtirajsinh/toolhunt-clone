@@ -20,6 +20,7 @@ const ExploreToolCard = ({
   tags,
   isLiked,
   setIsModalOpen,
+  promotedUntil,
 }) => {
   const router = useRouter();
   const [likes, setIsLikes] = useState(isLiked);
@@ -91,20 +92,22 @@ const ExploreToolCard = ({
                   </span>
                 </div>
               )}
-              <div
-                className="ml-auto flex gap-2 absolute right-0 top-0 px-2 py-1"
-                style={{
-                  background: "var(--primary-button)",
-                }}
-              >
-                <Image
-                  src="/icons/star-circular.svg"
-                  width={14}
-                  height={14}
-                  alt=""
-                />
-                Premium
-              </div>
+              {promotedUntil && new Date(promotedUntil) > new Date() && (
+                <div
+                  className="ml-auto flex gap-2 absolute right-0 top-0 px-2 py-1"
+                  style={{
+                    background: "var(--primary-button)",
+                  }}
+                >
+                  <Image
+                    src="/icons/star-circular.svg"
+                    width={14}
+                    height={14}
+                    alt=""
+                  />
+                  Promoted
+                </div>
+              )}
             </div>
             <p className="font-light text-sm w-full lg:w-[80%] mb-6 text-secondary-text">
               {content}
