@@ -7,19 +7,18 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "../ui/dialog";
 import LoginButton from "../LoginButton";
 import { useSession } from "next-auth/react";
+import { Card } from "../ui/card";
+import { Spinner } from "../ui/Spinner";
 
 const PromoteTool = () => {
   const { router } = useRouter();
-  const [formData, setFormData] = React.useState({
-    name: "",
-    siteURL: "",
-  });
+  const [siteLink, setSiteLink] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: sessionData } = useSession();
+  const [isPending, startTransition] = React.useTransition();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -27,47 +26,54 @@ const PromoteTool = () => {
       setIsModalOpen(true);
       return;
     }
-    if (!formData.name || !formData.siteURL) {
+    if (!siteLink) {
       return;
     }
-    const checkout = await fetch("/api/checkout", {
-      method: "POST",
-      body: JSON.stringify({
-        itemPrice: plans[1].priceId,
-        productName: plans[1].planType,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
+
+    const url = new URL(siteLink);
+    const pathname = url.pathname;
+
+    const pathSegments = pathname.split("/");
+    const parts = siteLink.split("/");
+    const toolId = parts[parts.length - 1];
+    console.log(toolId, "toolId from the submit tool page");
+
+    startTransition(async () => {
+      try {
+        const checkout = await fetch("/api/promote", {
+          method: "POST",
+          body: JSON.stringify({
+            itemPrice: plans[1].priceId,
+            productName: plans[1].planType,
+            toolId: toolId,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await checkout.json();
+        console.log(data, "checkout from the submit tool page");
+        window.location.href = data.url ?? "/profile";
+      } catch (e) {
+        console.log(e);
+      }
     });
-    const data = await checkout.json();
-    console.log(data, "checkout from the submit tool page");
-    window.location.assign(data.url);
   };
+
   return (
     <>
-      <div className="flex flex-col items-center sm:mt-32 mt-20">
+      <div className="flex flex-col items-center sm:mt-32 mt-20 max-w-5xl">
         <h1 className="font-bold text-2xl tracking-wider">Promote a Tool</h1>
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col space-y-4 mt-4 border w-full max-w-6xl md:p-16 p-4 rounded-md"
+          className="flex flex-col space-y-4 mt-4 border w-full max-w-6xl md:p-16 p-4 rounded-md relative"
         >
-          <label>Name:</label>
-          <input
-            required
-            type="text"
-            value={formData.name}
-            onChange={(event) => {
-              setFormData({ ...formData, name: event.target.value });
-            }}
-            className="p-2 rounded-md border-[1px] border-[#0eca90] bg-transparent"
-          ></input>
-          <label>Site URL:</label>
+          <label>Link to tools in ToolHunt : </label>
           <input
             required
             type="text"
             onChange={(event) => {
-              setFormData({ ...formData, siteURL: event.target.value });
+              setSiteLink(event.target.value);
             }}
             className="p-2 rounded-md border-[1px] border-[#0eca90] bg-transparent "
           ></input>
@@ -78,8 +84,9 @@ const PromoteTool = () => {
             style={{
               background: "var(--primary-button)",
             }}
+            disabled={isPending}
           >
-            Submit
+            {isPending ? <Spinner /> : "Promote"}
           </button>
         </form>
       </div>
@@ -88,7 +95,6 @@ const PromoteTool = () => {
         onOpenChange={setIsModalOpen}
         onClose={(event) => event.preventDefault()}
       >
-        <DialogTrigger>Open</DialogTrigger>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle>Login</DialogTitle>
