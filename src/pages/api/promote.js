@@ -43,6 +43,6 @@ export default async function handler(req, res) {
     res.status(200).json(session);
   } catch (e) {
     console.log(e);
+    res.status(500).json({ error: "Error creating checkout session" });
   }
-  res.status(200).json(formData);
 }
