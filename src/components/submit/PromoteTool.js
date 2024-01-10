@@ -18,7 +18,7 @@ const PromoteTool = () => {
   const [siteLink, setSiteLink] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: sessionData } = useSession();
-  const [isPending, startTransition] = React.useTransition();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -38,26 +38,27 @@ const PromoteTool = () => {
     const toolId = parts[parts.length - 1];
     console.log(toolId, "toolId from the submit tool page");
 
-    startTransition(async () => {
-      try {
-        const checkout = await fetch("/api/promote", {
-          method: "POST",
-          body: JSON.stringify({
-            itemPrice: plans[1].priceId,
-            productName: plans[1].planType,
-            toolId: toolId,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await checkout.json();
-        console.log(data, "checkout from the submit tool page");
-        window.location.href = data.url ?? "/profile";
-      } catch (e) {
-        console.log(e);
-      }
-    });
+    try {
+      setLoading(true);
+      const checkout = await fetch("/api/promote", {
+        method: "POST",
+        body: JSON.stringify({
+          itemPrice: plans[1].priceId,
+          productName: plans[1].planType,
+          toolId: toolId,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await checkout.json();
+      console.log(data, "checkout from the submit tool page");
+      window.location.href = data.url ?? "/profile";
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+      setLoading(false);
+    }
   };
 
   return (
@@ -84,9 +85,9 @@ const PromoteTool = () => {
             style={{
               background: "var(--primary-button)",
             }}
-            disabled={isPending}
+            disabled={loading}
           >
-            {isPending ? <Spinner /> : "Promote"}
+            {loading ? <Spinner /> : "Promote"}
           </button>
         </form>
       </div>
