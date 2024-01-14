@@ -52,7 +52,7 @@ const ExploreToolCard = ({
   return (
     <>
       <Toaster />
-      <div className="w-full bg-secondary-background p-4 rounded-lg flex gap-6 relative overflow-hidden cursor-pointer flex-wrap md:flex-nowrap">
+      <div className="w-full bg-secondary-background p-4 rounded-lg flex gap-6 relative overflow-hidden cursor-pointer flex-wrap md:flex-nowrap  hover:shadow-md hover:shadow-secondary-button">
         <div className="w-full md:max-w-[354px] md:max-h-[200px]">
           <Image
             src={imageUrl}
@@ -66,7 +66,7 @@ const ExploreToolCard = ({
           <div>
             <div className="flex gap-3 items-center mb-2">
               <h4
-                className="font-semibold text-lg  hover:text-[#0eca90] cursor-pointer"
+                className="font-semibold text-lg  hover:text-primary-hovertext cursor-pointer"
                 onClick={() => router.push(`/tool/${id}`)}
               >
                 {title}
