@@ -49,9 +49,11 @@ export async function getServerSideProps(context) {
               },
             },
           },
-          orderBy: {
-            id: "asc", // Ensure the posts are ordered by ID
-          },
+          orderBy: [
+            {
+              id: "asc",
+            },
+          ],
         });
 
         const cursor =
@@ -80,12 +82,7 @@ export async function getServerSideProps(context) {
           },
           orderBy: [
             {
-              likes: {
-                _count: "desc",
-              },
-            },
-            {
-              id: "asc", // Ensure the posts are ordered by ID
+              id: "asc",
             },
           ],
         });
