@@ -120,6 +120,7 @@ export async function getServerSideProps(context) {
   const getCategory = async () => {
     try {
       const categoriesWithPostCount = await prisma.category.findMany({
+        take: 50,
         include: {
           _count: {
             select: {

@@ -16,7 +16,7 @@ const New = ({ post, cursor }) => {
     if (!cursor || !post) return;
     setCursor(cursor);
     addTools(post);
-  }, [cursor]);
+  }, []);
 
   return (
     <main className={`flex min-h-screen flex-col text-primary-text`}>
@@ -49,11 +49,9 @@ export async function getServerSideProps(context) {
               },
             },
           },
-          orderBy: [
-            {
-              id: "asc",
-            },
-          ],
+          orderBy: {
+            id: "asc", // Ensure the posts are ordered by ID
+          },
         });
 
         const cursor =
@@ -80,11 +78,9 @@ export async function getServerSideProps(context) {
             postTags: true, // Include tags in the result if needed
             postCategories: true, // Include categories in the result if needed
           },
-          orderBy: [
-            {
-              id: "asc",
-            },
-          ],
+          orderBy: {
+            id: "asc", // Ensure the posts are ordered by ID
+          },
         });
 
         const cursor =
