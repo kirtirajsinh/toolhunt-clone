@@ -52,10 +52,10 @@ const NavBar = () => {
         </NavbarBrand>
       </NavbarContent>
       <NavbarContent justify="end">
-        <NavbarItem className="hidden md:flex hover:text-primary-hovertext">
+        <NavbarItem className="hidden md:flex hover:text-[#0eca90]">
           <Link href="/submit">Submit</Link>
         </NavbarItem>
-        <NavbarItem className="hidden md:flex hover:text-primary-hovertext">
+        <NavbarItem className="hidden md:flex hover:text-[#0eca90]">
           <Link href="/new">Explore</Link>
         </NavbarItem>
         <NavbarItem>

@@ -66,7 +66,7 @@ const ExploreToolCard = ({
           <div>
             <div className="flex gap-3 items-center mb-2">
               <h4
-                className="font-semibold text-lg  hover:text-primary-hovertext cursor-pointer"
+                className="font-semibold text-lg  hover:text-[#0eca90] cursor-pointer"
                 onClick={() => router.push(`/tool/${id}`)}
               >
                 {title}
