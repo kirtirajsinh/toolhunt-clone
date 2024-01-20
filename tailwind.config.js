@@ -31,6 +31,7 @@ module.exports = {
           foreground: "hsl(var(--primary-foreground))",
           button: "var(--primary-button)",
           text: "var(--primary-text)",
+          hovertext: "var(--primary-hover-text)",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
