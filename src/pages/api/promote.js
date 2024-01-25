@@ -25,7 +25,7 @@ export default async function handler(req, res) {
   console.log(formData, "formData from the api/promote");
   try {
     const session = await stripe.checkout.sessions.create({
-      success_url: "https://toolhunt-tau.vercel.app/",
+      success_url: "https://toolhunt-clone.vercel.app/",
       line_items: [
         {
           price: formData.itemPrice,
