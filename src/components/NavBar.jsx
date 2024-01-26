@@ -18,7 +18,6 @@ const NavBar = () => {
   const menuItems = [
     { label: "Home", href: "/" },
     { label: "Submit", href: "/submit" },
-    { label: "Promote", href: "/promote" },
     { label: "Explore", href: "/new" },
   ];
 
@@ -55,9 +54,6 @@ const NavBar = () => {
       <NavbarContent justify="end">
         <NavbarItem className="hidden md:flex hover:text-primary-hovertext">
           <Link href="/submit">Submit</Link>
-        </NavbarItem>
-        <NavbarItem className="hidden md:flex hover:text-primary-hovertext">
-          <Link href="/promote">Promote</Link>
         </NavbarItem>
         <NavbarItem className="hidden md:flex hover:text-primary-hovertext">
           <Link href="/new">Explore</Link>
