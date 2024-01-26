@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Cross2Icon } from "@radix-ui/react-icons";
 import * as ToastPrimitives from "@radix-ui/react-toast";
 import { cva } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 const ToastProvider = ToastPrimitives.Provider;
 
@@ -68,7 +68,7 @@ const ToastClose = React.forwardRef(({ className, ...props }, ref) => (
     toast-close=""
     {...props}
   >
-    <Cross2Icon className="h-4 w-4" />
+    <Image src="/icons/cross.svg" width={14} height={14} alt="" />
   </ToastPrimitives.Close>
 ));
 ToastClose.displayName = ToastPrimitives.Close.displayName;
