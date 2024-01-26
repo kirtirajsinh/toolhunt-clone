@@ -2,7 +2,7 @@ import NavBar from "@/components/NavBar";
 import "@/styles/globals.css";
 import { SessionProvider } from "next-auth/react";
 import { Rubik } from "next/font/google";
-import { NextUIProvider } from "@nextui-org/system";
+// import { NextUIProvider } from "@nextui-org/system";
 import Footer from "@/components/landingpage/Footer";
 
 export const rubik = Rubik({
@@ -16,11 +16,11 @@ export default function App({
 }) {
   return (
     <SessionProvider session={session}>
-      <NextUIProvider>
-        <NavBar />
-        <Component {...pageProps} />
-        <Footer />
-      </NextUIProvider>
+      {/* <NextUIProvider> */}
+      <NavBar />
+      <Component {...pageProps} />
+      <Footer />
+      {/* </NextUIProvider> */}
     </SessionProvider>
   );
 }
