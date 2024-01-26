@@ -52,7 +52,7 @@ export async function getServerSideProps(context) {
     if (session) {
       try {
         const postsWithTags = await prisma.post.findMany({
-          take: 20,
+          take: 10,
           orderBy: [
             {
               promotedUntil: "asc",
@@ -89,7 +89,7 @@ export async function getServerSideProps(context) {
     } else {
       try {
         const postsWithTags = await prisma.post.findMany({
-          take: 20,
+          take: 10,
           orderBy: [
             {
               promotedUntil: "asc",
@@ -120,7 +120,7 @@ export async function getServerSideProps(context) {
   const getCategory = async () => {
     try {
       const categoriesWithPostCount = await prisma.category.findMany({
-        take: 50,
+        take: 30,
         include: {
           _count: {
             select: {
