@@ -33,72 +33,43 @@ export default New;
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
   const getPosts = async () => {
-    if (session) {
-      try {
-        const postsWithTags = await prisma.post.findMany({
-          take: 10,
-          include: {
-            postTags: true, // Include tags in the result if needed
-            postCategories: true, // Include categories in the result if needed
-            likes: {
-              where: {
-                userId: session.user.id.id, // Filter likes to only include those by the current user
-              },
-              select: {
-                id: true, // Select only the fields you need, for example, the ID
-              },
-            },
-          },
-          orderBy: {
-            id: "asc", // Ensure the posts are ordered by ID
-          },
-        });
+    try {
+      const postsWithTags = await prisma.post.findMany({
+        take: 10,
+        include: {
+          postTags: true, // Include tags in the result if needed
+          postCategories: true, // Include categories in the result if needed
+          likes: session
+            ? {
+                where: {
+                  userId: session.user.id.id, // Filter likes to only include those by the current user
+                },
+                select: {
+                  id: true, // Select only the fields you need, for example, the ID
+                },
+              }
+            : false,
+        },
+        orderBy: {
+          id: "asc", // Ensure the posts are ordered by ID
+        },
+      });
 
-        const cursor =
-          postsWithTags.length > 0
-            ? postsWithTags[postsWithTags.length - 1].id
-            : null;
+      const cursor =
+        postsWithTags.length > 0
+          ? postsWithTags[postsWithTags.length - 1].id
+          : null;
 
-        console.log(cursor, "cursor from the API"); // For debugging purposes
+      console.log(cursor, "cursor from the API"); // For debugging purposes
 
-        const dataArray = [].concat(...Object.values(postsWithTags));
-        return {
-          dataArray,
-          cursor,
-        };
-      } catch (error) {
-        console.error(error);
-        return []; // Return an empty array in case of an error
-      }
-    } else {
-      try {
-        const postsWithTags = await prisma.post.findMany({
-          take: 10,
-          include: {
-            postTags: true, // Include tags in the result if needed
-            postCategories: true, // Include categories in the result if needed
-          },
-          orderBy: {
-            id: "asc", // Ensure the posts are ordered by ID
-          },
-        });
-
-        const cursor =
-          postsWithTags.length > 0
-            ? postsWithTags[postsWithTags.length - 1].id
-            : null;
-
-        console.log(cursor, "cursor from the API"); // For debugging purposes
-
-        const dataArray = [].concat(...Object.values(postsWithTags));
-        return {
-          dataArray,
-          cursor,
-        };
-      } catch (error) {
-        console.error(error);
-        return []; // Return an empty array in case of an error
-      }
+      const dataArray = [].concat(...Object.values(postsWithTags));
+      return {
+        dataArray,
+        cursor,
+      };
+    } catch (error) {
+      console.error(error);
+      return []; // Return an empty array in case of an error
     }
   };
 
