@@ -24,8 +24,9 @@ import LoginButton from "@/components/LoginButton";
 import { useSession } from "next-auth/react";
 import { DislikePost, LikeTool } from "@/lib/utils";
 import Link from "next/link";
+import SimilarTools from "@/components/product/SimilarTools";
 
-const Tool = ({ tool, alreadyLiked }) => {
+const Tool = ({ tool, alreadyLiked, similarProducts }) => {
   const router = useRouter();
   const { id: toolId } = router.query;
   console.log(tool.postCategories, "tool Data");
@@ -33,9 +34,9 @@ const Tool = ({ tool, alreadyLiked }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: sessionData } = useSession();
   console.log(tools, "tools from the global state");
+  console.log(similarProducts, "similarProducts");
   const [isLiked, setIsLiked] = React.useState(alreadyLiked);
   const { toast } = useToast();
-
   const Like = async () => {
     console.log("Liking or disliking tool");
     if (!sessionData) {
@@ -66,7 +67,7 @@ const Tool = ({ tool, alreadyLiked }) => {
   return (
     <>
       <Toaster />
-      <div className="flex flex-col mt-12 max-w-5xl mx-auto w-full px-6 lg:px-0  min-h-screen">
+      <div className="flex flex-col mt-12 mb-4 max-w-5xl mx-auto w-full px-6 lg:px-0  min-h-screen">
         <div className="flex flex-row md:flex-row md:items-center justify-between">
           <div className="flex flex-row  items-center space-x-12">
             <p className="md:text-5xl text-2xl font-bold">{tool?.title}</p>
@@ -135,38 +136,13 @@ const Tool = ({ tool, alreadyLiked }) => {
             </div>
           </div>
         </div>
-        <div className="mt-12 flex flex-col space-y-12">
-          <h1 className="md:text-3xl text-2xl font-bold">Similar Products</h1>
-          {tools
-            .filter(
-              (similarTool) =>
-                similarTool.id !== tool.id &&
-                similarTool.postCategories.filter((category) =>
-                  tool.categories.includes(category)
-                ).length >= 2
-            )
-            .map((similarTool) => (
-              <div key={similarTool.id} className="gap-6 ">
-                <ExploreToolCard
-                  id={similarTool.id}
-                  imageUrl={similarTool.imageUrl}
-                  title={similarTool.title}
-                  rating={similarTool.rating}
-                  content={similarTool.content}
-                  featured={similarTool.featured}
-                  source={similarTool.source}
-                  tags={similarTool.tags}
-                />
-              </div>
-            ))}
-        </div>
+        <SimilarTools tools={similarProducts} />
       </div>
       <Dialog
         open={isModalOpen}
         onOpenChange={setIsModalOpen}
         onClose={(event) => event.preventDefault()}
       >
-        <DialogTrigger>Open</DialogTrigger>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle>Login</DialogTitle>
@@ -207,11 +183,7 @@ export async function getServerSideProps(context) {
           postTags: true,
         },
       });
-      const simplifiedTool = {
-        ...tool,
-        tags: tool.tags.map((itemsTag) => itemsTag.tag),
-      };
-      return simplifiedTool;
+      return tool;
     } catch (e) {
       console.error(e);
       return {};
@@ -242,13 +214,64 @@ export async function getServerSideProps(context) {
       console.error(error);
     }
   };
+  const similarTools = async () => {
+    try {
+      const tools = await prisma.post.findMany({
+        where: {
+          postCategories: {
+            some: {
+              id: {
+                in: tool.postCategories.map((category) => category.id),
+              },
+            },
+          },
+          id: {
+            not: tool.id,
+          },
+        },
+        orderBy: [
+          {
+            promotedUntil: "asc",
+          },
+          {
+            likes: {
+              _count: "desc",
+            },
+          },
+          // promoted in the future will be added here
+        ],
+        include: {
+          postTags: true, // Include tags in the result if needed
+          postCategories: true, // Include categories in the result if needed
+          likes: session
+            ? {
+                where: {
+                  userId: session?.user?.id?.id, // Filter likes to only include those by the current user
+                },
+                select: {
+                  id: true, // Select only the fields you need, for example, the ID
+                },
+              }
+            : false,
+        },
+        take: 10,
+      });
+      return tools;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  };
 
   const tool = await getTool();
   const isLiked = await existingLike();
+  const similarProducts = await similarTools();
+  console.log(similarProducts, "similar products");
   return {
     props: {
       tool: JSON.parse(JSON.stringify(tool)),
       alreadyLiked: isLiked ? true : false,
+      similarProducts: JSON.parse(JSON.stringify(similarProducts)),
     },
   };
 }
