@@ -9,7 +9,7 @@ import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/components/ui/use-toast";
 import {
@@ -25,8 +25,9 @@ import { useSession } from "next-auth/react";
 import { DislikePost, LikeTool } from "@/lib/utils";
 import Link from "next/link";
 import SimilarTools from "@/components/product/SimilarTools";
+import { HiOutlineDotsVertical } from "react-icons/hi";
 
-const Tool = ({ tool, alreadyLiked, similarProducts }) => {
+const Tool = ({ tool, alreadyLiked, similarProducts, toolCreator }) => {
   const router = useRouter();
   const { id: toolId } = router.query;
   console.log(tool.postCategories, "tool Data");
@@ -36,6 +37,9 @@ const Tool = ({ tool, alreadyLiked, similarProducts }) => {
   console.log(tools, "tools from the global state");
   console.log(similarProducts, "similarProducts");
   const [isLiked, setIsLiked] = React.useState(alreadyLiked);
+  const [optionsVisible, setOptionsVisible] = useState(false);
+  const optionsRef = useRef(null);
+  const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const Like = async () => {
     console.log("Liking or disliking tool");
@@ -64,6 +68,46 @@ const Tool = ({ tool, alreadyLiked, similarProducts }) => {
     console.log(dislike, "dislike from dislike function");
   };
 
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (optionsRef.current && !optionsRef.current.contains(event.target)) {
+        setOptionsVisible(false);
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [optionsRef]);
+
+  const handleDelete = async () => {
+    console.log("deleting tool");
+    if (!sessionData) {
+      setIsModalOpen(true);
+      return;
+    }
+    try {
+      setLoading(true);
+      const deleteTool = await fetch("/api/deleteTool", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ toolId, authorId: tool.authorId }),
+      });
+      const response = await deleteTool.json();
+      console.log(response, "response from delete tool");
+      router.push("/profile");
+      toast({
+        title: "Tool Deleted SuccessFully",
+      });
+      setLoading(false);
+    } catch (e) {
+      console.error(e);
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <Toaster />
@@ -81,7 +125,7 @@ const Tool = ({ tool, alreadyLiked, similarProducts }) => {
               <HeartIcon isLiked={isLiked} />
             </button>
           </div>
-          <div>
+          <div className="flex flex-row items-center space-x-2">
             <ShareButton
               title={tool?.title}
               url={
@@ -89,6 +133,28 @@ const Tool = ({ tool, alreadyLiked, similarProducts }) => {
                 `https://toolhunt.ai/tool/${tool?.id}`
               }
             />
+            {toolCreator && (
+              <button onClick={() => setOptionsVisible(true)}>
+                <HiOutlineDotsVertical className="h-20 w-6" />
+              </button>
+            )}
+            {optionsVisible && (
+              <div
+                className="absolute mt-28  w-32 bg-secondary-background rounded-lg border border-border  shadow-lg z-10 "
+                onClick={(e) => e.stopPropagation()}
+                ref={optionsRef}
+              >
+                <div className="py-1">
+                  <button
+                    disabled={loading}
+                    onClick={handleDelete}
+                    className="block w-full text-left px-4 py-2 text-sm hover:bg-primary-foreground"
+                  >
+                    {loading ? "Deleting.." : "Delete Tool"}
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
         <p className="text-secondary-text mt-3">
@@ -267,11 +333,14 @@ export async function getServerSideProps(context) {
   const isLiked = await existingLike();
   const similarProducts = await similarTools();
   console.log(similarProducts, "similar products");
+  const toolCreator = tool?.authorId === session?.user?.id?.id ? true : false;
+  console.log(toolCreator, "toolCreator");
   return {
     props: {
       tool: JSON.parse(JSON.stringify(tool)),
       alreadyLiked: isLiked ? true : false,
       similarProducts: JSON.parse(JSON.stringify(similarProducts)),
+      toolCreator: toolCreator,
     },
   };
 }
