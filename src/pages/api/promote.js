@@ -22,7 +22,24 @@ export default async function handler(req, res) {
     return;
   }
   const formData = req.body;
-  console.log(formData, "formData from the api/promote");
+  let toolData;
+  try {
+    toolData = await prisma.Post.findUnique({
+      where: {
+        id: formData.toolId,
+      },
+    });
+    console.log(toolData, "toolData from promote");
+    if (!toolData) {
+      res.status(401).json({ message: "Tool Not found" });
+      return;
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: "Error finding tool" });
+    return;
+  }
+
   try {
     const session = await stripe.checkout.sessions.create({
       success_url: "https://toolhunt-clone.vercel.app/",
