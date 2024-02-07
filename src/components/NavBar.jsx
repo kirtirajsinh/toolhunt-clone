@@ -23,7 +23,6 @@ const NavBar = () => {
 
   return (
     <Navbar
-      shouldHideOnScroll
       classNames={{
         "max-width": "64rem",
         wrapper: "px-6 lg:px-0",
