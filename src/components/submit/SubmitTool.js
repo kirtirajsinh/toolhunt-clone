@@ -19,6 +19,8 @@ import {
 } from "../ui/dialog";
 import { useTools } from "../hooks/tools";
 import { Card } from "../ui/card";
+import { z } from "zod";
+import { Spinner } from "../ui/Spinner";
 
 const SubmitTool = () => {
   const { router } = useRouter();
@@ -37,6 +39,14 @@ const SubmitTool = () => {
     imageUrl: null,
     content: "",
     categories: [],
+  });
+
+  const mySchema = z.object({
+    title: z.string().min(1).max(255),
+    source: z.string().url(),
+    imageUrl: z.string().url(),
+    content: z.string().min(1).max(10000),
+    categories: z.array(z.string().min(1)),
   });
 
   const handleKeyDown = (event) => {
@@ -80,6 +90,20 @@ const SubmitTool = () => {
       !formData.content ||
       !formData.categories
     ) {
+      return;
+    }
+    const validationResult = mySchema.safeParse(formData);
+
+    if (!validationResult.success) {
+      // Handle validation errors
+      console.error(validationResult.error);
+      toast({
+        variant: "destructive",
+        title: "Invalid Input",
+        description: validationResult.error.issues
+          .map((issue) => issue.message)
+          .join(", "),
+      });
       return;
     }
 
@@ -280,7 +304,7 @@ const SubmitTool = () => {
               background: "var(--primary-button)",
             }}
           >
-            {loading ? "Submitting..." : "Submit"}
+            {loading ? <Spinner /> : "Submit"}
           </button>
         </form>
       </div>
