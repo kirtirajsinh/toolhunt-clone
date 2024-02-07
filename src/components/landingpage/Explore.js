@@ -26,7 +26,7 @@ const Explore = () => {
     <>
       <section className="flex flex-col mt-12 max-w-5xl mx-auto w-full px-6 lg:px-0">
         <ExploreHeader />
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6" id="explore">
           {tools &&
             tools.length > 0 &&
             tools.map((tool) => {
@@ -48,18 +48,18 @@ const Explore = () => {
               );
             })}
         </div>
-        {router.asPath === "/new" ? (
-          <LoadMore />
-        ) : (
+        {router.asPath === "/" ? (
           <Button
             className="self-center font-medium mt-8 mb-24 px-8 py-3 rounded-full text-base"
             style={{
               background: "var(--primary-button)",
             }}
-            onClick={() => router.push("/new")}
+            onClick={() => router.push("/new#explore")}
           >
             Explore(5475) AI Tools
           </Button>
+        ) : (
+          <LoadMore />
         )}
       </section>
       <Dialog
