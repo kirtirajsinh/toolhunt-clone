@@ -75,7 +75,7 @@ const SearchBar = () => {
       {(filteredResult || product) && isCardVisible && (
         <Card
           ref={cardRef}
-          className=" max-w-5xl absolute inset-x-6  mx-auto px-4 z-500 mt-6 py-6 bg-secondary-background rounded shadow-md z-10"
+          className=" max-w-5xl absolute inset-x-6  mx-auto px-4 z-500 mt-6 py-6 bg-secondary-background rounded shadow-md z-10 max-h-64 overflow-y-scroll"
         >
           {filteredResult.map((category) => (
             <p

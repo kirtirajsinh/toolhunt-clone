@@ -6,7 +6,10 @@ export default async function handler(req, res) {
   try {
     const productsWithTitle = await prisma.post.findMany({
       where: {
-        title: body.title,
+        title: {
+          contains: body.title,
+          mode: "insensitive",
+        },
       },
     });
     console.log(productsWithTitle, "products with title");
