@@ -26,6 +26,12 @@ export default async function handler(req, res) {
             create: { title: categoryName },
           })),
         },
+        postTags: {
+          connectOrCreate: formData.tags.map((tagName) => ({
+            where: { title: tagName },
+            create: { title: tagName },
+          })),
+        },
       },
     });
     console.log("Tool added to database", addTool);
