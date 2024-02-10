@@ -8,21 +8,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 
-const Submit = ({ categories: allCategories }) => {
+const Submit = () => {
   const router = useRouter();
-  const addCategories = useTools((state) => state.addCategories);
-  const categories = useTools((state) => state.categories);
-
-  useEffect(() => {
-    const setCategory = () => {
-      console.log("useEffect running");
-      if (categories.length > 0) return;
-      if (allCategories) {
-        addCategories(allCategories);
-      }
-    };
-    setCategory();
-  }, [allCategories]);
 
   return (
     <>
@@ -110,28 +97,3 @@ const Submit = ({ categories: allCategories }) => {
 };
 
 export default Submit;
-
-export async function getServerSideProps() {
-  const getCategory = async () => {
-    try {
-      const url =
-        process.env.NODE_ENV === "production"
-          ? "https://toolhunt-tau.vercel.app"
-          : "http://localhost:3000";
-      const categoriesWithPostCount = await fetch(`${url}/api/getCategories`);
-      const categoryData = await categoriesWithPostCount.json();
-      console.log("Fetched categories", categoryData);
-      return categoryData;
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
-  };
-  const categories = await getCategory();
-
-  return {
-    props: {
-      categories,
-    },
-  };
-}
