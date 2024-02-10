@@ -284,10 +284,10 @@ export async function getServerSideProps(context) {
     try {
       const tools = await prisma.post.findMany({
         where: {
-          postCategories: {
+          postTags: {
             some: {
               id: {
-                in: tool.postCategories.map((category) => category.id),
+                in: tool.postTags.map((category) => category.id),
               },
             },
           },
