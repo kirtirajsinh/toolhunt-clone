@@ -42,11 +42,13 @@ const NavBar = () => {
           </Link>
           <div className="hidden md:flex gap-4">
             <NavbarItem>
-              <SocialDiv icon="/icons/linkedin.svg" text="34k" />
+              <Link href="https://twitter.com/aitoptools" target="_blank">
+                <SocialDiv icon="/icons/twitter.svg" text="9k" />
+              </Link>
             </NavbarItem>
-            <NavbarItem>
+            {/* <NavbarItem>
               <SocialDiv icon="/icons/plane.svg" text="34k" />
-            </NavbarItem>
+            </NavbarItem> */}
           </div>
         </NavbarBrand>
       </NavbarContent>
@@ -73,12 +75,14 @@ const NavBar = () => {
           </NavbarMenuItem>
         ))}
         <div className="flex gap-4 mt-8">
-          <NavbarMenuItem>
-            <SocialDiv icon="/icons/linkedin.svg" text="34k" />
-          </NavbarMenuItem>
-          <NavbarMenuItem>
+          <NavbarItem>
+            <Link href="https://twitter.com/aitoptools" target="_blank">
+              <SocialDiv icon="/icons/twitter.svg" text="9k" />
+            </Link>
+          </NavbarItem>
+          {/* <NavbarMenuItem>
             <SocialDiv icon="/icons/plane.svg" text="34k" />
-          </NavbarMenuItem>
+          </NavbarMenuItem> */}
         </div>
       </NavbarMenu>
     </Navbar>
