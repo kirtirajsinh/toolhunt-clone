@@ -52,7 +52,9 @@ const LoginButton = () => {
                     />
                   )}
                 </div>
-                <p className="text-sm sm:text-md ">{sessionData?.user?.name}</p>
+                <p className="text-sm sm:text-md text-ellipsis w-20 text-ellipsis overflow-hidden">
+                  {sessionData?.user?.name}
+                </p>
               </div>
             )}
             {optionsVisible && (
