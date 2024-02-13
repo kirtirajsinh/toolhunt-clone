@@ -8,14 +8,17 @@ const ExploreHeader = () => {
         <h3 className="font-bold text-2xl">Explore AI Tools</h3>
       </div>
       <div className="flex gap-4">
-        <button className="border-border border-[1px] flex gap-2 items-center py-1 px-2 rounded-md">
+        {/* <button className="border-border border-[1px] flex gap-2 items-center py-1 px-2 rounded-md">
           <Image src="/icons/filter.svg" width={14} height={14} alt="" />
           <span>Filters</span>
-        </button>
-        <button className="border-border border-[1px] flex gap-2 items-center py-1 px-2 rounded-md">
+        </button> */}
+        {/* <button
+          onClick={handleSortClick}
+          className="border-border border-[1px] flex gap-2 items-center py-1 px-2 rounded-md"
+        >
           <Image src="/icons/sort.svg" width={14} height={14} alt="" />
           <span>Sort</span>
-        </button>
+        </button> */}
       </div>
     </div>
   );

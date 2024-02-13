@@ -8,12 +8,12 @@ const TrendingHeader = () => {
         <Image src="/icons/trending.svg" width={32} height={32} alt="" />
         <h3 className="font-bold text-2xl">Trending AI Tools</h3>
       </div>
-      <div className="flex gap-4">
+      {/* <div className="flex gap-4">
         <button className="border-border border-[1px] flex gap-2 items-center py-1 px-2 rounded-md">
           <Image src="/icons/sort.svg" width={14} height={14} alt="" />
           <span>Sort</span>
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
